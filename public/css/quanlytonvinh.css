@@ -1,0 +1,114 @@
+body{
+    background-color: white;
+}
+.sub-bd{
+    background-color: white;
+}
+.fill{
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 10px;
+    padding-top: 30px;
+    text-align: center;
+}
+.ds{
+    border-radius: 3px;
+    border-color:  #e7ebf0;
+    width: 200px;
+    margin-left: 20px;
+}
+.ht{
+    width: 200px;
+    margin-top: 10px;
+}
+.sb{
+    margin-left: 10px;
+}
+.sx{
+    margin-left: 45px;
+}
+.sx select{
+    border-radius: 3px;
+    border-color:  #e7ebf0;
+    width: 150px;
+    margin-top: 5px;
+}
+.ckb{
+    margin-top: 10px;
+}
+.fill >label{
+    margin-top: 10px;
+}
+select{
+    margin-bottom: 10px;
+}
+*{
+    font-size: 19px;
+}
+h2{
+    text-align: center;
+}
+h3{
+    text-align: center;
+}
+.form-tt{
+    text-align: center;
+    margin-top: 70px;
+    margin-bottom: 70px;
+}
+table.center{
+    margin-left: auto;
+    margin-right: auto;
+}
+td.lb{
+    text-align: left;
+}
+.iptt{
+    margin-left: 40px;
+    margin-bottom: 20px;
+    width: 300px;
+}
+.add{
+    margin-bottom: 50px;
+}
+td.ip{
+    text-align: left;
+}
+select.ot{
+    border-radius: 3px;
+    border-color:  #e7ebf0;
+    width: 200px;
+    margin-left: 20px;
+    height: 30px;
+}
+td > img{
+    width: 30px;
+    height: 30px;
+}
+td > img.ic{
+    width: 20px;
+    height: 20px;
+}
+#ipall{
+    text-align: right;
+    margin-right: 20px;
+} 
+div.kqtv{
+    text-align: right;
+    
+}
+img.tv{
+    width: 15px;
+    height: 15px;
+}
+select.mtv{
+    width: 90px;
+}
+td.tttk{
+    padding: 10px;
+}
+td.qlip{
+    text-align: left;
+    padding-right: 30px;
+    padding-bottom: 10px;
+}
