@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Import từ bệnh viện</title>
+    <title>Kết quả import</title>
 
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
@@ -82,7 +83,7 @@
               </li>
 
               <li class="sidebar-item">
-                <a href="form-layout.html" class="sidebar-link">
+                <a href="#" class="sidebar-link">
                   <i class="bi bi-droplet-fill"></i>
                   <span>Quản lý nguồn máu</span>
                 </a>
@@ -251,53 +252,132 @@
             <div class="page-title">
               <div class="row">
                 <div class="col-12 col-md-6 order-md-1 order-last">
-                  <h3>Bệnh viện</h3>
-                  <p class="text-subtitle text-muted">Import file excel từ bệnh viện</p>
+                  <h3>Kết quả import</h3>
+                  <p class="text-subtitle text-muted">Kết quả import từ bệnh viện.</p>
                 </div>
                 <div class="col-12 col-md-6 order-md-2 order-first">
                   <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                     <ol class="breadcrumb">
-                      <li class="breadcrumb-item">
-                        <a href="index.html">Trang chủ</a>
-                      </li>
-                      <li class="breadcrumb-item active" aria-current="page">Bệnh viện</li>
+                      <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
+                      <li class="breadcrumb-item active" aria-current="page">Kết quả import</li>
                     </ol>
                   </nav>
                 </div>
               </div>
             </div>
-            <section id="custom-file-input">
+
+            <section class="bootstrap-select">
               <div class="row">
                 <div class="col-12">
                   <div class="card">
-                    <div class="card-header">
-                      <h4 class="card-title">IMPORT</h4>
-                    </div>
                     <div class="card-content">
                       <div class="card-body">
-                        <div class="col-md-6 mb-1">
-						<?php
-                        if(isset($status)){
-                            echo '<div class="alert alert-danger" role="alert">'.$message.'</div>';
-                        }
-                        ?>
-                          <form method="post" enctype="multipart/form-data">
-							{{ csrf_field() }}
-                            <div class="input-group">
-                              <input
-                                type="file"
-                                class="form-control"
-                                id="myfile"
-								name="myfile"
-								 accept=".xls,.xlsx"
-                                aria-describedby="inputGroupFileAddon04"
-                                aria-label="Upload"
-                              />
-                              <button class="btn btn-primary" type="submit" id="btn-import-bv">
-                                Upload
-                              </button>
-                            </div>
-                          </form>
+                        <div class="row">
+                          <div class="text-center mt-1">
+                            <h3>KẾT QUẢ IMPORT</h3>
+                            <table class="mx-auto mb-5">
+                              <tbody>
+                                <tr>
+                                  <td class="text-left">Số người được cập nhật:</td>
+                                  <td>{{ $count['update'] }}</td>
+                                </tr>
+                                <tr>
+                                  <td class="text-left">Số người được thêm mới:</td>
+                                  <td>{{ $count['insert'] }}</td>
+                                </tr>
+                                <tr>
+                                  <td class="text-left">Số người cần xử lý:</td>
+                                  <td>{{ $count['duplicate'] }}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <div class="line-set mb-4"></div>
+						  @if($count['duplicate']>0)
+                          <div class="table-responsive">
+                            <table class="table table-bordered mb-0">
+                              <thead>
+                                <tr>
+                                  <th>Số thứ tự</th>
+                                  <th>Họ và tên</th>
+                                  <th>Ngày sinh</th>
+                                  <th>Nơi làm việc</th>
+                                  <th>Số điện thoại</th>
+                                  <th>Địa chỉ</th>
+                                  <th>Số lần đã hiến</th>
+                                  <th>Nhóm máu</th>
+                                  <th>Nhóm Rh</th>
+                                  <th>Chọn</th>
+                                  <th></th>
+                                </tr>
+                              </thead>
+							  @for($i = 0; $i < count($listDuplicate); $i++)
+                              <tbody>
+								@for($j = 0; $j < count($listDuplicate[$i]); $j++)
+								@if($j==0)
+                                <tr>
+                                  <td>
+                                    {{ $i+1 }}
+									<img class="icon" src="assets/images/logo/excel.png" />
+                                  </td>
+                                  <td class="text-bold-500">{{ $listDuplicate[$i][$j]->HoTen }}</td>
+                                  <td>{{ $listDuplicate[$i][$j]->NgaySinh->format('d/m/Y') }}</td>
+                                  <td class="text-bold-500">{{ $listDuplicate[$i][$j]->NoiLamViec }}</td>
+                                  <td>{{ $listDuplicate[$i][$j]->SDT }}</td>
+                                  <td>{{ $listDuplicate[$i][$j]->DiaChi }}</td>
+                                  <td>{{ $listDuplicate[$i][$j]->SoLanHien }}</td>
+                                  <td>{{ $listDuplicate[$i][$j]->Nhom_ABO }}</td>
+                                  <td>{{ $listDuplicate[$i][$j]->Nhom_Rh }}</td>
+								  <td></td>
+								  <td></td>
+                                </tr>
+								@else
+								<tr>
+                                  <td>
+                                    {{ $i+1 }}
+									<img class="icon" src="assets/images/logo/database_16px.png" />
+                                  </td>
+                                  <td class="text-bold-500"></td>
+                                  <td></td>
+                                  <td class="text-bold-500">{{ $listDuplicate[$i][$j]->NoiLamViec }}</td>
+                                  <td>{{ $listDuplicate[$i][$j]->SDT }}</td>
+                                  <td>{{ $listDuplicate[$i][$j]->DiaChi }}</td>
+                                  <td>{{ $listDuplicate[$i][$j]->SoLanHien }}</td>
+                                  <td>{{ $listDuplicate[$i][$j]->Nhom_ABO }}</td>
+                                  <td>{{ $listDuplicate[$i][$j]->Nhom_Rh }}</td>
+								  <td>
+									 <input
+                                      class="form-check-input"
+                                      type="radio"
+                                      name="flexRadioDefault"
+                                      id="flexRadioDefault1"
+                                     />
+								  </td>
+								  <td><a href="#" class="btn btn-primary btn-size">Xóa</a></td>
+                                </tr>
+								@endif
+								@endfor
+                                <tr>
+                                  <td colspan="11" style="text-align: right">
+                                    <button class="btn btn-primary" type="button" id="btn-import">
+                                      Import
+                                    </button>
+                                  </td>
+                                </tr>
+                              </tbody>
+							  @endfor
+                            </table>
+                          </div>
+                          <div id="btn-right">
+                            <button
+                              class="btn btn-primary btn-set"
+                              type="button"
+                              id="btn-import-all"
+                            >
+                              Import All
+                            </button>
+                          </div>
+						  @endif
                         </div>
                       </div>
                     </div>

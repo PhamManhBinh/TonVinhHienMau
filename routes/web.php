@@ -16,21 +16,23 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/ImportBenhVien','App\Http\Controllers\ImportBVController@index');
+Route::get('/ImportBenhVien',function () {
+    return view('ImportBenhVien');
+});
 Route::post('/ImportBenhVien','App\Http\Controllers\ImportBVController@import');
 
 Route::get('/Login', function () {
-    return view('login');
+    return view('Login');
 });
 
 Route::get('/QuenMatKhau', function () {
-    return view('quenmatkhau');
+    return view('QuenMatKhau');
 });
 
 Route::get('/DoiMatKhau', function () {
-    return view('doimatkhau');
+    return view('DoiMatKhau');
 });
 
 Route::get('/TaoTaiKhoan', function () {
-    return view('taotaikhoan');
+    return view('TaoTaiKhoan');
 });

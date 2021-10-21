@@ -5,17 +5,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\ExcelBenhVien;
+use App\Models\NguoiHienMau;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Illuminate\Support\Facades\DB;
 
 class ImportBVController extends Controller
 {
-    public function index()
-    {
-        return view('importBenhVien');
-    }
 
     public function import(Request $request)
     {
@@ -27,7 +23,7 @@ class ImportBVController extends Controller
 
         //check xem người dùng có upload file lên không
         if(!$request->hasFile('myfile')){
-            return view('importBenhVien')->with(['status'=> 0, 'message'=>'Bạn chưa chọn file!']);
+            return view('ImportBenhVien')->with(['status'=> 0, 'message'=>'Bạn chưa chọn file!']);
         }
 
         //get file, định dạng file và đường dẫn
@@ -37,7 +33,7 @@ class ImportBVController extends Controller
 
         //check lỗi định dạng file
         if($fileExtension!="xlsx"){
-            return view('importBenhVien')->with(['status'=> 2, 'message'=>'Định dạng file không đúng!']);
+            return view('ImportBenhVien')->with(['status'=> 2, 'message'=>'Định dạng file không đúng!']);
         }
 
         $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
@@ -49,15 +45,13 @@ class ImportBVController extends Controller
 		$columnArray = $this->getColumnArray($highestRow,$highestColumnIndex,$excelSheet);
 
         if($columnArray == null){
-            return view('importBenhVien')->with(['status'=> 3, 'message'=>'Lỗi cấu trúc file excel!']);
+            return view('ImportBenhVien')->with(['status'=> 3, 'message'=>'Lỗi cấu trúc file excel!']);
         }
 
         $countArray = array('update' => 0,'insert' => 0,'duplicate' => 0);
 
-        //hàm thực hiện import dữ liệu, đồng thời trả về số lượng dòng update, thêm và trùng
-        $this->importDataBV($highestRow,$columnArray,$excelSheet,$countArray);
-
-        return view('importBenhVien')->with(['status'=> 1, 'count'=>$countArray]);
+        $listDuplicate = $this->importDataBV($highestRow,$columnArray,$excelSheet,$countArray);
+        return view('KetQuaImportBV')->with(['status'=> 1, 'count'=>$countArray,'listDuplicate'=>$listDuplicate]);
     }
 
     //hàm đọc cấu trúc file excel, trả về mảng các cột, trả về null nếu sai cấu trúc
@@ -92,53 +86,67 @@ class ImportBVController extends Controller
         return null;
     }
 
+    //hàm thực hiện import dữ liệu, đồng thời trả về số lượng dòng update, thêm và trùng
+    //nếu duplicate trả về danh sách người trùng
     protected function importDataBV($highestRow,$columnArray,$excelSheet,&$countArray){
         $stt=1;
-        $model = new ExcelBenhVien;
-        $modelTemp = new ExcelBenhVien;
+        $model = new NguoiHienMau;
+        $listDuplicate = array();
+
         for ($row = 1; $row <= $highestRow; ++$row) {
             $value = $excelSheet->getCellByColumnAndRow($columnArray[0], $row)->getValue();
             if($value!=$stt){ continue; }
 
-            $model->hoTen = $excelSheet->getCellByColumnAndRow($columnArray[1], $row)->getValue();
+            //đọc từng dòng
+            $model->HoTen = $excelSheet->getCellByColumnAndRow($columnArray[1], $row)->getValue();
             $ngaySinh = $excelSheet->getCellByColumnAndRow($columnArray[2], $row)->getValue();
-            $model->ngaySinh = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($ngaySinh);
-            $model->ngheNghiep = $excelSheet->getCellByColumnAndRow($columnArray[3], $row)->getValue();
-            $model->noiLamViec = $excelSheet->getCellByColumnAndRow($columnArray[4], $row)->getValue();
-            $model->sdt = $excelSheet->getCellByColumnAndRow($columnArray[5], $row)->getValue();
-            $model->diaChi = $excelSheet->getCellByColumnAndRow($columnArray[6], $row)->getValue();
-            $model->soLanHien = $excelSheet->getCellByColumnAndRow($columnArray[7], $row)->getValue();
-            $model->nhomABO = $excelSheet->getCellByColumnAndRow($columnArray[8], $row)->getValue();
-            $model->nhomRh = $excelSheet->getCellByColumnAndRow($columnArray[9], $row)->getValue();
+            $model->NgaySinh = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($ngaySinh);
+            $model->NgheNghiep = $excelSheet->getCellByColumnAndRow($columnArray[3], $row)->getValue();
+            $model->NoiLamViec = $excelSheet->getCellByColumnAndRow($columnArray[4], $row)->getValue();
+            $model->SDT = $excelSheet->getCellByColumnAndRow($columnArray[5], $row)->getValue();
+            $model->DiaChi = $excelSheet->getCellByColumnAndRow($columnArray[6], $row)->getValue();
+            $model->SoLanHien = $excelSheet->getCellByColumnAndRow($columnArray[7], $row)->getValue();
+            $model->Nhom_ABO = $excelSheet->getCellByColumnAndRow($columnArray[8], $row)->getValue();
+            $model->Nhom_Rh = $excelSheet->getCellByColumnAndRow($columnArray[9], $row)->getValue();
             $stt += 1;
 
             //so khớp từng người trong database
-            $modelTemp = DB::select('SELECT * FROM excelbenhvien WHERE HoTen="'.$model->hoTen.'" AND NgaySinh="'.$model->ngaySinh->format('Y-m-d').'" AND Nhom_ABO="'.$model->nhomABO.'"');
+            $listResult = DB::select('SELECT * FROM nguoihienmau WHERE HoTen="'.$model->HoTen.'" AND NgaySinh="'.$model->NgaySinh->format('Y-m-d').'" AND Nhom_ABO="'.$model->Nhom_ABO.'"');
 
-
-            if($modelTemp!=null){
+            if($listResult!=null){
 
                 //nếu đã tồn tại trong database thì cập nhật số lần hiến máu
-                if(count($modelTemp)==1 && $model->soLanHien > $modelTemp[0]->SoLanHien){
-                    DB::update('UPDATE excelbenhvien SET SoLanHien=? WHERE Id=?',[$model->soLanHien,$modelTemp[0]->Id]);
+                if(count($listResult)==1){
+                    DB::update('UPDATE nguoihienmau SET SoLanHien=? WHERE Id=?',[$model->SoLanHien,$listResult[0]->Id]);
                     $countArray['update']++;
                 }else{
                     // Nếu có nhiều người trong database trùng với người đang xét trong file excel
                     //(theo các tiêu chí trên) thì hiển thị danh sách các người này để cán bộ quyết định
+                    $model->Id = DB::table('excelbenhvien')->insertGetId(
+                        ['HoTen' => $model->HoTen, 'NgaySinh' => $model->NgaySinh->format('Y-m-d'), 'NgheNghiep' => $model->NgheNghiep,
+                        'NoiLamViec' => $model->NoiLamViec, 'SDT' => $model->SDT, 'DiaChi' => $model->DiaChi,
+                        'SoLanHien' => $model->SoLanHien, 'Nhom_ABO' => $model->Nhom_ABO, 'Nhom_Rh' => $model->Nhom_Rh,]
+                    );
+
+                    $tempArray = array();
+                    array_push($tempArray,clone $model);
+                    foreach($listResult as $result){
+                        array_push($tempArray,clone $result);
+                        $countArray['duplicate']++;
+                    }
+                    array_push($listDuplicate,$tempArray);
                 }
 
             }
             else{
                 //chưa tồn tại thì thêm vào database
-                DB::insert('INSERT INTO excelbenhvien (HoTen,NgaySinh,NgheNghiep,NoiLamViec,SDT,DiaChi,SoLanHien,Nhom_ABO,Nhom_Rh)
-                    VALUES ("'.$model->hoTen.'","'.$model->ngaySinh->format('Y-m-d').'","'.$model->ngheNghiep.'","'.$model->noiLamViec.'","'.$model->sdt.'","'.$model->diaChi.'",'.$model->soLanHien.',"'.$model->nhomABO.'","'.$model->nhomRh.'")');
+                DB::insert('INSERT INTO nguoihienmau (HoTen,NgaySinh,NgheNghiep,NoiLamViec,SDT,DiaChi,SoLanHien,Nhom_ABO,Nhom_Rh)
+                    VALUES ("'.$model->HoTen.'","'.$model->NgaySinh->format('Y-m-d').'","'.$model->NgheNghiep.'","'.$model->NoiLamViec.'","'.$model->SDT.'","'.$model->DiaChi.'",'.$model->SoLanHien.',"'.$model->Nhom_ABO.'","'.$model->Nhom_Rh.'")');
                 $countArray['insert']++;
             }
 
 
-            //$db = new db();
-            //$insert = $db->query();
-
         }
+        return $listDuplicate;
     }
 }
