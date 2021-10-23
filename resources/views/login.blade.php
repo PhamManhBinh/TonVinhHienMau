@@ -21,10 +21,16 @@
           <div id="auth-left">
             <h1 class="auth-title">Đăng nhập.</h1>
             <p class="auth-subtitle mb-5">Đăng nhập thông tin của bạn đã đăng ký.</p>
-
-            <form action="index.html">
+            @if(isset($message))
+                <div class="alert alert-danger" role="alert">{{ $message }}</div>
+            @endif
+            <form action="/Login" method="POST">
+            {{ csrf_field() }}
               <div class="form-group position-relative has-icon-left mb-4">
-                <input type="text" class="form-control form-control-xl" placeholder="Tài khoản" />
+                <input type="text" class="form-control form-control-xl" placeholder="Tài khoản" name="username"/>
+                @if ($errors->has('username'))
+                  {{ $errors->first('username')}}
+                @endif
                 <div class="form-control-icon">
                   <i class="bi bi-person"></i>
                 </div>
@@ -34,7 +40,11 @@
                   type="password"
                   class="form-control form-control-xl"
                   placeholder="Mật khẩu"
+                  name="password"
                 />
+                @if ($errors->has('password'))
+                  {{ $errors->first('password')}}
+                @endif
                 <div class="form-control-icon">
                   <i class="bi bi-shield-lock"></i>
                 </div>
@@ -50,7 +60,7 @@
                   Ghi nhớ
                 </label>
               </div>
-              <button class="btn btn-primary btn-block btn-lg shadow-lg mt-5">Đăng nhập</button>
+              <button class="btn btn-primary btn-block btn-lg shadow-lg mt-5" type="submit">Đăng nhập</button>
             </form>
             <div class="text-center mt-5 text-lg fs-4">
               <p class="text-gray-600">
