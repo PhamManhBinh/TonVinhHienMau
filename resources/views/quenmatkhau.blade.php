@@ -21,22 +21,29 @@
           <div id="auth-left">
             <h1 class="auth-title">Quên mật khẩu</h1>
             <p class="auth-subtitle mb-5">
-              Nhập email của bạn và chúng tôi sẽ gửi đường dẫn để đặt lại mật khẩu.
+              Nhập email của bạn và chúng tôi sẽ gửi mật khẩu mới về email của bạn.
             </p>
-
-            <form action="index.html">
+            @if (Session::has('message'))
+              <div class="alert alert-success" role="alert">{{ Session::get('message') }}</div>
+            @endif
+            <form action="{{ url('/QuenMatKhau') }}" method="POST">
+            {{ csrf_field() }}
               <div class="form-group position-relative has-icon-left mb-4">
-                <input type="email" class="form-control form-control-xl" placeholder="Email" />
+                <input type="email" class="form-control form-control-xl" placeholder="Email" name="email"/>
+                @if ($errors->has('email'))
+                  {{ $errors->first('email')}}
+                @endif
                 <div class="form-control-icon">
                   <i class="bi bi-envelope"></i>
                 </div>
               </div>
-              <button class="btn btn-primary btn-block btn-lg shadow-lg mt-5">Gửi</button>
+              <button class="btn btn-primary btn-block btn-lg shadow-lg mt-5" type="submit">Gửi</button>
+
             </form>
             <div class="text-center mt-5 text-lg fs-4">
               <p class="text-gray-600">
                 Nhớ tài khoản của bạn?
-                <a href="auth-login.html" class="font-bold">Đăng nhập</a>.
+                <a href="{{ url('/Login') }}" class="font-bold">Đăng nhập</a>.
               </p>
             </div>
           </div>

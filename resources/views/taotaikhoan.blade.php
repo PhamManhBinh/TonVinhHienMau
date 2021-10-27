@@ -21,118 +21,120 @@
 
 <body>
   <div id="app">
-    <div id="sidebar" class="active">
-      <div class="sidebar-wrapper active">
-        <div class="sidebar-header">
-          <div class="d-flex align-items-center">
-            <div class="avatar avatar-xl ms-3">
-              <a href="index.html">
-                <img src="assets/images/faces/1.jpg" alt="Logo" srcset="" />
-              </a>
-            </div>
-            <div class="ms-3 name">
-              <h5 class="font-bold">Admin</h5>
-              <h6 class="text-teal mb-0">@admin</h6>
-            </div>
-            <div class="toggler ms-2">
-              <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+  <div id="sidebar" class="active">
+        <div class="sidebar-wrapper active">
+          <div class="sidebar-header">
+            <div class="d-flex align-items-center">
+              <div class="avatar avatar-xl ms-3">
+                <a href="{{ url('/Index') }}">
+                  <img src="assets/images/faces/1.jpg" alt="Logo" srcset="" />
+                </a>
+              </div>
+              <div class="ms-3 name">
+                <h5 class="font-bold">Admin</h5>
+                <h6 class="text-teal mb-0">@admin</h6>
+              </div>
+              <div class="toggler ms-2">
+                <a href="#" class="sidebar-hide d-xl-none d-block"
+                  ><i class="bi bi-x bi-middle"></i
+                ></a>
+              </div>
             </div>
           </div>
+          <div class="sidebar-menu">
+            <ul class="menu">
+              <li class="sidebar-title">Menu</li>
+
+              <li class="sidebar-item">
+                <a href="{{ url('/Index') }}" class="sidebar-link">
+                  <i class="bi bi-grid-fill"></i>
+                  <span>Trang chủ</span>
+                </a>
+              </li>
+
+              <li class="sidebar-item has-sub">
+                <a href="#" class="sidebar-link">
+                  <i class="bi bi-stack"></i>
+                  <span>Quản lý tôn vinh</span>
+                </a>
+                <ul class="submenu ">
+                  <li class="submenu-item">
+                    <a href="{{ url('/KiemDuyetTonVinh') }}">Kiểm duyệt tôn vinh</a>
+                  </li>
+                  <li class="submenu-item ">
+                    <a href="{{ url('/TimKiemTonVinh') }}"> Tìm kiếm thông tin </a>
+                  </li>
+                </ul>
+              </li>
+
+              <li class="sidebar-item has-sub">
+                <a href="#" class="sidebar-link">
+                  <i class="bi bi-hexagon-fill"></i>
+                  <span>Lịch sử tôn vinh</span>
+                </a>
+                <ul class="submenu">
+                  <li class="submenu-item">
+                    <a href="{{ url('/TaoMoiTonVinh') }}">Tạo mới tôn vinh</a>
+                  </li>
+                  <li class="submenu-item">
+                    <a href="{{ url('/XemKetQua') }}">Xem kết quả</a>
+                  </li>
+                </ul>
+              </li>
+
+              <li class="sidebar-item">
+                <a href="#" class="sidebar-link">
+                  <i class="bi bi-droplet-fill"></i>
+                  <span>Quản lý nguồn máu</span>
+                </a>
+              </li>
+
+              <li class="sidebar-item has-sub">
+                <a href="#" class="sidebar-link">
+                  <i class="bi bi-file-earmark-spreadsheet-fill"></i>
+                  <span>Quản lý import</span>
+                </a>
+                <ul class="submenu">
+                  <li class="submenu-item">
+                    <a href="#">Cơ sở</a>
+                  </li>
+                  <li class="submenu-item">
+                    <a href="{{ url('/ImportBenhVien') }}">Bệnh viện</a>
+                  </li>
+                </ul>
+              </li>
+
+              <li class="sidebar-item active has-sub">
+                <a href="#" class="sidebar-link">
+                  <i class="bi bi-person-badge-fill"></i>
+                  <span>Quản lý tài khoản</span>
+                </a>
+                <ul class="submenu active">
+                  <li class="submenu-item active">
+                    <a href="{{ url('/TaoTaiKhoan') }}">Tạo tài khoản</a>
+                  </li>
+                  <li class="submenu-item">
+                    <a href="{{ url('/DoiMatKhau') }}">Đổi mật khẩu</a>
+                  </li>
+                  <li class="submenu-item ">
+                    <a href="{{ url('/UpdateTaiKhoan') }}">Sửa/Xóa tài khoản</a>
+                  </li>
+                </ul>
+              </li>
+
+              <li class="sidebar-item">
+                <a href="{{ url('/Logout') }}" class="sidebar-link">
+                  <i class="bi bi-arrow-bar-right"></i>
+                  <span>Đăng xuất</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <button class="sidebar-toggler btn x">
+            <i data-feather="x"></i>
+          </button>
         </div>
-        <div class="sidebar-menu">
-          <ul class="menu">
-            <li class="sidebar-title">Menu</li>
-
-            <li class="sidebar-item">
-              <a href="index.html" class="sidebar-link">
-                <i class="bi bi-grid-fill"></i>
-                <span>Trang chủ</span>
-              </a>
-            </li>
-
-            <li class="sidebar-item has-sub">
-              <a href="#" class="sidebar-link">
-                <i class="bi bi-stack"></i>
-                <span>Quản lý tôn vinh</span>
-              </a>
-              <ul class="submenu ">
-                <li class="submenu-item">
-                  <a href="kiem-duyet-ton-vinh.html">Kiểm duyệt tôn vinh</a>
-                </li>
-                <li class="submenu-item ">
-                  <a href="tim-kiem-thong-tin.html"> Tìm kiếm thông tin </a>
-                </li>
-              </ul>
-            </li>
-
-            <li class="sidebar-item has-sub">
-              <a href="#" class="sidebar-link">
-                <i class="bi bi-hexagon-fill"></i>
-                <span>Lịch sử tôn vinh</span>
-              </a>
-              <ul class="submenu">
-                <li class="submenu-item">
-                  <a href="form-element-input.html">Tạo mới tôn vinh</a>
-                </li>
-                <li class="submenu-item">
-                  <a href="xem-lich-su.html">Xem kết quả</a>
-                </li>
-              </ul>
-            </li>
-
-            <li class="sidebar-item">
-              <a href="#" class="sidebar-link">
-                <i class="bi bi-droplet-fill"></i>
-                <span>Quản lý nguồn máu</span>
-              </a>
-            </li>
-
-            <li class="sidebar-item has-sub">
-              <a href="#" class="sidebar-link">
-                <i class="bi bi-file-earmark-spreadsheet-fill"></i>
-                <span>Quản lý import</span>
-              </a>
-              <ul class="submenu">
-                <li class="submenu-item">
-                  <a href="import-co-so.html">Cơ sở</a>
-                </li>
-                <li class="submenu-item">
-                  <a href="import-benh-vien.html">Bệnh viện</a>
-                </li>
-              </ul>
-            </li>
-
-            <li class="sidebar-item active has-sub">
-              <a href="#" class="sidebar-link">
-                <i class="bi bi-person-badge-fill"></i>
-                <span>Quản lý tài khoản</span>
-              </a>
-              <ul class="submenu active">
-                <li class="submenu-item active">
-                  <a href="auth-register.html">Tạo tài khoản</a>
-                </li>
-                <li class="submenu-item">
-                  <a href="doi-mat-khau.html">Đổi mật khẩu</a>
-                </li>
-                <li class="submenu-item ">
-                  <a href="sua-xoa-thong-tin.html">Sửa/Xóa tài khoản</a>
-                </li>
-              </ul>
-            </li>
-
-            <li class="sidebar-item">
-              <a href="auth-login.html" class="sidebar-link">
-                <i class="bi bi-arrow-bar-right"></i>
-                <span>Đăng xuất</span>
-              </a>
-            </li>
-          </ul>
-        </div>
-        <button class="sidebar-toggler btn x">
-          <i data-feather="x"></i>
-        </button>
       </div>
-    </div>
 
     <div id="main" class="layout-navbar">
       <header class="mb-3">

@@ -24,7 +24,7 @@
             @if(isset($message))
                 <div class="alert alert-danger" role="alert">{{ $message }}</div>
             @endif
-            <form action="/Login" method="POST">
+            <form action="{{ url('/Login') }}" method="POST">
             {{ csrf_field() }}
               <div class="form-group position-relative has-icon-left mb-4">
                 <input type="text" class="form-control form-control-xl" placeholder="Tài khoản" name="username"/>
@@ -63,11 +63,7 @@
               <button class="btn btn-primary btn-block btn-lg shadow-lg mt-5" type="submit">Đăng nhập</button>
             </form>
             <div class="text-center mt-5 text-lg fs-4">
-              <p class="text-gray-600">
-                Chưa có tài khoản?
-                <a href="auth-register.html" class="font-bold">Đăng ký</a>
-              </p>
-              <p><a class="font-bold" href="auth-forgot-password.html">Quên mật khẩu?</a></p>
+              <p><a class="font-bold" href="{{ url('/QuenMatKhau') }}">Quên mật khẩu?</a></p>
             </div>
           </div>
         </div>

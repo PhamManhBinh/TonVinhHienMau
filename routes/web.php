@@ -43,6 +43,7 @@ Route::get('/Logout', function (Request $request) {
     return redirect('/Login');
 });
 
+Route::post('/QuenMatKhau', 'App\Http\Controllers\ForgotPasswordController@postEmail');
 Route::get('/QuenMatKhau', function () {
     return view('QuenMatKhau');
 });

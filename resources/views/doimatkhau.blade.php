@@ -23,12 +23,12 @@
 
   <body>
     <div id="app">
-      <div id="sidebar" class="active">
+    <div id="sidebar" class="active">
         <div class="sidebar-wrapper active">
           <div class="sidebar-header">
             <div class="d-flex align-items-center">
               <div class="avatar avatar-xl ms-3">
-                <a href="index.html">
+                <a href="{{ url('/Index') }}">
                   <img src="assets/images/faces/1.jpg" alt="Logo" srcset="" />
                 </a>
               </div>
@@ -48,7 +48,7 @@
               <li class="sidebar-title">Menu</li>
 
               <li class="sidebar-item">
-                <a href="index.html" class="sidebar-link">
+                <a href="{{ url('/Index') }}" class="sidebar-link">
                   <i class="bi bi-grid-fill"></i>
                   <span>Trang chủ</span>
                 </a>
@@ -61,10 +61,10 @@
                 </a>
                 <ul class="submenu ">
                   <li class="submenu-item">
-                    <a href="kiem-duyet-ton-vinh.html">Kiểm duyệt tôn vinh</a>
+                    <a href="{{ url('/KiemDuyetTonVinh') }}">Kiểm duyệt tôn vinh</a>
                   </li>
                   <li class="submenu-item ">
-                    <a href="tim-kiem-thong-tin.html"> Tìm kiếm thông tin </a>
+                    <a href="{{ url('/TimKiemTonVinh') }}"> Tìm kiếm thông tin </a>
                   </li>
                 </ul>
               </li>
@@ -76,10 +76,10 @@
                 </a>
                 <ul class="submenu">
                   <li class="submenu-item">
-                    <a href="form-element-input.html">Tạo mới tôn vinh</a>
+                    <a href="{{ url('/TaoMoiTonVinh') }}">Tạo mới tôn vinh</a>
                   </li>
                   <li class="submenu-item">
-                    <a href="xem-lich-su.html">Xem kết quả</a>
+                    <a href="{{ url('/XemKetQua') }}">Xem kết quả</a>
                   </li>
                 </ul>
               </li>
@@ -98,10 +98,10 @@
                 </a>
                 <ul class="submenu">
                   <li class="submenu-item">
-                    <a href="import-co-so.html">Cơ sở</a>
+                    <a href="#">Cơ sở</a>
                   </li>
                   <li class="submenu-item">
-                    <a href="import-benh-vien.html">Bệnh viện</a>
+                    <a href="{{ url('/ImportBenhVien') }}">Bệnh viện</a>
                   </li>
                 </ul>
               </li>
@@ -113,19 +113,19 @@
                 </a>
                 <ul class="submenu active">
                   <li class="submenu-item">
-                    <a href="auth-register.html">Tạo tài khoản</a>
+                    <a href="{{ url('/TaoTaiKhoan') }}">Tạo tài khoản</a>
                   </li>
                   <li class="submenu-item active">
-                    <a href="doi-mat-khau.html">Đổi mật khẩu</a>
+                    <a href="{{ url('/DoiMatKhau') }}">Đổi mật khẩu</a>
                   </li>
                   <li class="submenu-item ">
-                    <a href="sua-xoa-thong-tin.html">Sửa/Xóa tài khoản</a>
+                    <a href="{{ url('/UpdateTaiKhoan') }}">Sửa/Xóa tài khoản</a>
                   </li>
                 </ul>
               </li>
 
               <li class="sidebar-item">
-                <a href="auth-login.html" class="sidebar-link">
+                <a href="{{ url('/Logout') }}" class="sidebar-link">
                   <i class="bi bi-arrow-bar-right"></i>
                   <span>Đăng xuất</span>
                 </a>
