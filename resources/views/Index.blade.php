@@ -32,8 +32,8 @@
                 </a>
               </div>
               <div class="ms-3 name">
-                <h5 class="font-bold">Admin</h5>
-                <h6 class="text-teal mb-0">@admin</h6>
+                <h5 class="font-bold">{{ Session::get('name') }}</h5>
+                <h6 class="text-teal mb-0">{{ '@'.Session::get('username') }}</h6>
               </div>
               <div class="toggler ms-2">
                 <a href="#" class="sidebar-hide d-xl-none d-block"
@@ -201,7 +201,7 @@
                   <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
                     <div class="user-menu d-flex">
                       <div class="user-name text-end me-3">
-                        <h6 class="mb-0 text-gray-600">Admin</h6>
+                        <h6 class="mb-0 text-gray-600">{{ Session::get('name') }}</h6>
                         <p class="mb-0 text-sm text-gray-600">Administrator</p>
                       </div>
                       <div class="user-img d-flex align-items-center">
@@ -213,7 +213,7 @@
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
                     <li>
-                      <h6 class="dropdown-header">Hello, Admin!</h6>
+                      <h6 class="dropdown-header">Hello, {{ Session::get('name') }}!</h6>
                     </li>
                     <li>
                       <a class="dropdown-item" href="#"

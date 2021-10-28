@@ -23,6 +23,7 @@ class LoginController extends Controller
             return view('Login')->with('message', 'Sai mật khẩu !');
         }
         $request->session()->put('username', $request->username);
+        $request->session()->put('name', $user->Name);
         return redirect('/Index');
     }
     

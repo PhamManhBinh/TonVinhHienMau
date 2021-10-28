@@ -33,7 +33,7 @@ class ApiKetQuaImportBV extends Controller
             return response('404')->setStatusCode(404);
         }
 
-        $status = DB::update('UPDATE excelbenhvien SET Xoa=1 WHERE Id=?',[$request['Id']]);
+        $status = DB::update('UPDATE nguoihienmau SET Xoa=1 WHERE Id=?',[$request['Id']]);
         
         if($status>0){
             return response('200')->setStatusCode(200);

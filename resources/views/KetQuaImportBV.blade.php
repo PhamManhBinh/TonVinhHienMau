@@ -29,8 +29,8 @@
                 </a>
               </div>
               <div class="ms-3 name">
-                <h5 class="font-bold">Admin</h5>
-                <h6 class="text-teal mb-0">@admin</h6>
+                <h5 class="font-bold">{{ Session::get('name') }}</h5>
+                <h6 class="text-teal mb-0">{{ '@'.Session::get('username') }}</h6>
               </div>
               <div class="toggler ms-2">
                 <a href="#" class="sidebar-hide d-xl-none d-block"
@@ -111,7 +111,7 @@
                   <li class="submenu-item">
                     <a href="{{ url('/TaoTaiKhoan') }}">Tạo tài khoản</a>
                   </li>
-                  <li class="submenu-item active">
+                  <li class="submenu-item">
                     <a href="{{ url('/DoiMatKhau') }}">Đổi mật khẩu</a>
                   </li>
                   <li class="submenu-item ">
@@ -178,7 +178,7 @@
                                 <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
                                     <div class="user-menu d-flex">
                                         <div class="user-name text-end me-3">
-                                            <h6 class="mb-0 text-gray-600">Admin</h6>
+                                            <h6 class="mb-0 text-gray-600">{{ Session::get('name') }}</h6>
                                             <p class="mb-0 text-sm text-gray-600">Administrator</p>
                                         </div>
                                         <div class="user-img d-flex align-items-center">
@@ -190,7 +190,7 @@
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
                                     <li>
-                                        <h6 class="dropdown-header">Hello, Admin!</h6>
+                                        <h6 class="dropdown-header">Hello, {{ Session::get('name') }}!</h6>
                                     </li>
                                     <li>
                                         <a class="dropdown-item" href="#"><i class="icon-mid bi bi-person me-2"></i> My
@@ -346,8 +346,7 @@
                                                                                     {{ $i + 1 }}
                                                                                     <img class="icon"
                                                                                         src="assets/images/logo/database_16px.png" />
-																					<input type="hidden" name="dataID[]" value="{{ $listDuplicate[$i][$j]->Id }}"/>
-                                                                                </td>
+																				</td>
                                                                                 <td class="text-bold-500"></td>
                                                                                 <td></td>
                                                                                 <td class="text-bold-500">
@@ -455,7 +454,6 @@
                                                                             {{ $i + 1 }}
                                                                             <img class="icon"
                                                                                 src="assets/images/logo/excel.png" />
-																			<input type="hidden" name="dataID[]" value="{{ $listUpdate[$i]->Id }}"/>
                                                                         </td>
                                                                         <td class="text-bold-500">
                                                                             {{ $listUpdate[$i]->HoTen }}
@@ -477,15 +475,6 @@
                                                                         </td>
                                                                         <td></td>
                                                                         <td></td>
-                                                                    </tr>
-
-                                                                    <tr>
-                                                                        <td colspan="11" style="text-align: right">
-                                                                            <button class="btn btn-primary"
-                                                                                type="button" id="btn-import" onclick="Import({{ $listUpdate[$i]->Id }})">
-                                                                                Import
-                                                                            </button>
-                                                                        </td>
                                                                     </tr>
                                                                 </tbody>
                                                             @endfor

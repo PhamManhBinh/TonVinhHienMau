@@ -4,19 +4,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tạo Tài Khoản</title>
+  <title>Sửa thông tin </title>
 
   <!-- Include Choices CSS -->
   <link rel="stylesheet" href="assets/vendors/choices.js/choices.min.css" />
 
   <link rel="preconnect" href="https://fonts.gstatic.com" />
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/bootstrap.css" />
+  <link rel="stylesheet" href="/assets/css/bootstrap.css" />
 
-  <link rel="stylesheet" href="assets/vendors/perfect-scrollbar/perfect-scrollbar.css" />
-  <link rel="stylesheet" href="assets/vendors/bootstrap-icons/bootstrap-icons.css" />
-  <link rel="stylesheet" href="assets/css/app.css" />
-  <link rel="shortcut icon" href="assets/images/favicon.svg" type="image/x-icon" />
+  <link rel="stylesheet" href="/assets/vendors/perfect-scrollbar/perfect-scrollbar.css" />
+  <link rel="stylesheet" href="/assets/vendors/bootstrap-icons/bootstrap-icons.css" />
+  <link rel="stylesheet" href="/assets/css/app.css" />
+  <link rel="shortcut icon" href="/assets/images/favicon.svg" type="image/x-icon" />
 </head>
 
 <body>
@@ -27,7 +27,7 @@
             <div class="d-flex align-items-center">
               <div class="avatar avatar-xl ms-3">
                 <a href="{{ url('/Index') }}">
-                  <img src="assets/images/faces/1.jpg" alt="Logo" srcset="" />
+                  <img src="{{ url('assets/images/faces/1.jpg') }}" alt="Logo" srcset="" />
                 </a>
               </div>
               <div class="ms-3 name">
@@ -110,13 +110,13 @@
                   <span>Quản lý tài khoản</span>
                 </a>
                 <ul class="submenu active">
-                  <li class="submenu-item active">
+                  <li class="submenu-item">
                     <a href="{{ url('/TaoTaiKhoan') }}">Tạo tài khoản</a>
                   </li>
                   <li class="submenu-item">
                     <a href="{{ url('/DoiMatKhau') }}">Đổi mật khẩu</a>
                   </li>
-                  <li class="submenu-item ">
+                  <li class="submenu-item active">
                     <a href="{{ url('/UpdateTaiKhoan') }}">Sửa/Xóa tài khoản</a>
                   </li>
                 </ul>
@@ -181,7 +181,7 @@
                     </div>
                     <div class="user-img d-flex align-items-center">
                       <div class="avatar avatar-md">
-                        <img src="assets/images/faces/1.jpg" />
+                        <img src="/assets/images/faces/1.jpg" />
                       </div>
                     </div>
                   </div>
@@ -248,63 +248,51 @@
                     <div class="card-body">
                       <div class="row justify-content-center">
                         <div class="text-center mt-4 mb-4">
-                          <h3>TẠO TÀI KHOẢN MỚI</h3>
+                          <h3>SỬA THÔNG TIN TÀI KHOẢN</h3>
                         </div>
-                        @if (session('message'))
-                        <span class="aler aler-danger">
-                          <strong>{{session('message')}}</strong>
-                        </span>
-                        @endif
                         <div class="col-md-6 col-12">
                           <div class="card">
                             <div class="card-content">
                               <div class="card-body">
-                                <form class="form border border-secondary" method="POST" enctype="multipart/form-data">
+                                <form class="form border border-secondary" method="POST" action="/UpdateTaiKhoan/{{$user->Id}}" enctype="multipart/form-data">
                                   {{ csrf_field() }}
                                   <div class="form-body">
                                     <div class="form-group">
                                       <label>Họ Tên</label>
-                                      <input type="text" class="form-control mt-2 py-2" name="name">
+                                      <input type="text" class="form-control mt-2 py-2" name="name" value="{{$user->Name}}">
                                       @if ($errors->has('name'))
                                       {{ $errors->first('name')}}
                                       @endif
                                     </div>
                                     <div class="form-group">
-                                      <label>Email</label>
-                                      <input type="text" class="form-control mt-2 py-2" name="email">
-                                      @if ($errors->has('email'))
-                                      {{ $errors->first('email')}}
-                                      @endif
-                                    </div>
-                                    <div class="form-group">
                                       <label>Số Điện Thoại</label>
-                                      <input type="text" class="form-control mt-2 py-2" name="phone">
+                                      <input type="text" class="form-control mt-2 py-2 " name="phone" value="{{$user->Phone}}">
                                       @if ($errors->has('phone'))
                                       {{ $errors->first('phone')}}
                                       @endif
                                     </div>
                                     <div class="form-group">
                                       <label>Tên Tài Khoản</label>
-                                      <input type="text" class="form-control mt-2 py-2" name="username">
+                                      <input type="text" class="form-control mt-2 py-2 " name="username" value="{{$user->UserName}}">
                                       @if ($errors->has('username'))
                                       {{ $errors->first('username')}}
                                       @endif
                                     </div>
                                     <div class="form-group">
-                                      <label for="password-vertical">Mật khẩu mới</label>
-                                      <input type="password" id="password" class="form-control mt-2 py-2" name="password" placeholder="********">
-                                      @if ($errors->has('password'))
-                                      {{ $errors->first('password')}}
+                                      <label>Email</label>
+                                      <input type="text" class="form-control mt-2 py-2 " name="email" value="{{$user->Email}}">
+                                      @if ($errors->has('email'))
+                                      {{ $errors->first('email')}}
                                       @endif
-                                    </div>
-                                    <div class="form-group">
-                                      <label for="password-vertical">Xác nhận mật khẩu</label>
-                                      <input type="password" id="password-confirm" class="form-control mt-2 py-2" name="password_confirm" placeholder="********">
                                     </div>
                                   </div>
                                   <div class="form-actions d-flex justify-content-end mt-4">
-                                    <button type="reset" class="btn btn-light-primary me-2">Hủy bỏ</button>
-                                    <button type="submit" class="btn btn-primary ">Lưu</button>
+                                    <a href="/UpdateTaiKhoan/{{ $user->Id }}">
+                                      <button class="btn btn-light-primary me-2">Hủy bỏ
+                                      </button>
+                                    </a>
+                                    <button type="submit" class="btn btn-primary ">Cập nhập
+                                    </button>
                                   </div>
                                 </form>
                               </div>
@@ -322,13 +310,13 @@
         </div>
       </div>
     </div>
-    <script src="assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
 
     <!-- Include Choices JavaScript -->
-    <script src="assets/vendors/choices.js/choices.min.js"></script>
+    <script src="/assets/vendors/choices.js/choices.min.js"></script>
 
-    <script src="assets/js/main.js"></script>
+    <script src="/assets/js/main.js"></script>
 </body>
 
 </html>

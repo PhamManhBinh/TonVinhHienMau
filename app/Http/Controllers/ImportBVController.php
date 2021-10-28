@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ExcelBenhVien;
+use App\Models\NguoiHienMau;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Illuminate\Support\Facades\DB;
@@ -96,7 +97,7 @@ class ImportBVController extends Controller
     //nếu duplicate trả về danh sách người trùng
     protected function importDataBV($highestRow,$columnArray,$excelSheet,&$countArray){
         $stt=1;
-        $model = new ExcelBenhVien;
+        $model = new NguoiHienMau;
         $listDuplicate = array();
         $listInsert = array();
         $listUpdate = array();
@@ -110,14 +111,14 @@ class ImportBVController extends Controller
             $stt += 1;
 
             //so khớp từng người trong database
-            $listResult = DB::select('SELECT * FROM excelbenhvien WHERE HoTen="'.$model->HoTen.'" AND NgaySinh="'.$model->NgaySinh->format('Y-m-d').'" AND Nhom_ABO="'.$model->Nhom_ABO.'" AND Xoa=0');
+            $listResult = DB::select('SELECT * FROM nguoihienmau WHERE HoTen="'.$model->HoTen.'" AND NgaySinh="'.$model->NgaySinh->format('Y-m-d').'" AND Nhom_ABO="'.$model->Nhom_ABO.'" AND Xoa=0');
 
             try{
                 if($listResult!=null){
 
                     //nếu đã tồn tại trong database thì cập nhật số lần hiến máu
                     if(count($listResult)==1){
-                        DB::update('UPDATE excelbenhvien SET SoLanHien=? WHERE Id=?',[$model->SoLanHien,$listResult[0]->Id]);
+                        DB::update('UPDATE nguoihienmau SET SoLanHien=? WHERE Id=?',[$model->SoLanHien,$listResult[0]->Id]);
                         $model->Id=$listResult[0]->Id;
                         $countArray['update']++;
                         array_push($listUpdate,clone $model);
@@ -180,13 +181,14 @@ class ImportBVController extends Controller
     }
 
     public function ImportAll(Request $request){
-        foreach($request['dataID'] as $id){
-            try{
-                $data = DB::select('SELECT DISTINCT HoTen,NgaySinh,NgheNghiep,NoiLamViec,SDT,DiaChi,SoLanHien,Nhom_ABO,Nhom_Rh FROM excelbenhvien WHERE Id=? And Xoa=0',[$id]);
-                DB::insert('INSERT INTO nguoihienmau(HoTen,NgaySinh,NgheNghiep,NoiLamViec,SDT,DiaChi,SoLanHien,Nhom_ABO,Nhom_Rh,Nguon_Goc_Import)
-                    VALUES(?,?,?,?,?,?,?,?,?,?)',[$data[0]->HoTen,$data[0]->NgaySinh,$data[0]->NgheNghiep,$data[0]->NoiLamViec,$data[0]->SDT,$data[0]->DiaChi,$data[0]->SoLanHien,$data[0]->Nhom_ABO,$data[0]->Nhom_Rh,0]);
-            }catch(Exception $exception){}
-        }
+        if(isset($request['dataID']))
+            foreach($request['dataID'] as $id){
+                try{
+                    $data = DB::select('SELECT DISTINCT HoTen,NgaySinh,NgheNghiep,NoiLamViec,SDT,DiaChi,SoLanHien,Nhom_ABO,Nhom_Rh FROM excelbenhvien WHERE Id=? And Xoa=0',[$id]);
+                    DB::insert('INSERT INTO nguoihienmau(HoTen,NgaySinh,NgheNghiep,NoiLamViec,SDT,DiaChi,SoLanHien,Nhom_ABO,Nhom_Rh,Nguon_Goc_Import)
+                        VALUES(?,?,?,?,?,?,?,?,?,?)',[$data[0]->HoTen,$data[0]->NgaySinh,$data[0]->NgheNghiep,$data[0]->NoiLamViec,$data[0]->SDT,$data[0]->DiaChi,$data[0]->SoLanHien,$data[0]->Nhom_ABO,$data[0]->Nhom_Rh,0]);
+                }catch(Exception $exception){}
+            }
         return back()->with('success','Import Thành Công!');
     }
 }

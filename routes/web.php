@@ -23,7 +23,10 @@ Route::get('/Index', function (Request $request) {
     return redirect('/Login');
 });
 
-Route::get('/ImportBenhVien',function () {
+Route::get('/ImportBenhVien',function (Request $request) {
+    if(!$request->session()->has('username')){
+        return redirect('/Login');
+    }
     return view('ImportBenhVien');
 });
 Route::post('/ImportBenhVien','App\Http\Controllers\ImportBVController@import');
@@ -48,14 +51,32 @@ Route::get('/QuenMatKhau', function () {
     return view('QuenMatKhau');
 });
 
-Route::get('/DoiMatKhau', function () {
+Route::post('/DoiMatKhau', 'App\Http\Controllers\ChangePasswordController@changePassword');
+Route::get('/DoiMatKhau', function (Request $request) {
+    if(!$request->session()->has('username')){
+        return redirect('/Login');
+    }
     return view('DoiMatKhau');
 });
 
-Route::get('/TaoTaiKhoan', function () {
+Route::get('/TaoTaiKhoan', function (Request $request) {
+    if(!$request->session()->has('username')){
+        return redirect('/Login');
+    }
     return view('TaoTaiKhoan');
 });
 Route::post('/TaoTaiKhoan', 'App\Http\Controllers\RegisterController@register');
+
+// Sửa thông tin
+Route::get('/UpdateTaiKhoan/{Id}', 'App\Http\Controllers\SuaXoaTTController@edit');
+Route::post('/UpdateTaiKhoan/{Id}', 'App\Http\Controllers\SuaXoaTTController@update');
+
+// Hiển thị dữ liệu
+Route::get('/UpdateTaiKhoan', 'App\Http\Controllers\SuaXoaTTController@index');
+
+// Xóa thông tin
+Route::get('/XoaTaiKhoan/{Id}', 'App\Http\Controllers\SuaXoaTTController@destroy');
+
 
 Route::post('/api/ImportBenhVien/Xoa','App\Http\Controllers\ApiKetQuaImportBV@Xoa');
 Route::post('/api/ImportBenhVien/Import','App\Http\Controllers\ApiKetQuaImportBV@Import');

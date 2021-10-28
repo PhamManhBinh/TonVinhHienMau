@@ -33,8 +33,8 @@
                 </a>
               </div>
               <div class="ms-3 name">
-                <h5 class="font-bold">Admin</h5>
-                <h6 class="text-teal mb-0">@admin</h6>
+                <h5 class="font-bold">{{ Session::get('name') }}</h5>
+                <h6 class="text-teal mb-0">{{ '@'.Session::get('username') }}</h6>
               </div>
               <div class="toggler ms-2">
                 <a href="#" class="sidebar-hide d-xl-none d-block"
@@ -202,7 +202,7 @@
                   <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
                     <div class="user-menu d-flex">
                       <div class="user-name text-end me-3">
-                        <h6 class="mb-0 text-gray-600">Admin</h6>
+                        <h6 class="mb-0 text-gray-600">{{ Session::get('name') }}</h6>
                         <p class="mb-0 text-sm text-gray-600">Administrator</p>
                       </div>
                       <div class="user-img d-flex align-items-center">
@@ -214,7 +214,7 @@
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
                     <li>
-                      <h6 class="dropdown-header">Hello, Admin!</h6>
+                      <h6 class="dropdown-header">Hello, {{ Session::get('name') }}!</h6>
                     </li>
                     <li>
                       <a class="dropdown-item" href="#"
@@ -278,33 +278,46 @@
                           <div class="text-center mt-4 mb-4">
                             <h3>THAY ĐỔI MẬT KHẨU</h3>
                           </div>
+                          @if (session('message'))
+                          <strong style="text-align:center">{{session('message')}}</strong>
+                          @endif
                           <div class="col-md-6 col-12">
                             <div class="card">
                                 <div class="card-content">
                                     <div class="card-body">
-                                        <form class="form border border-secondary" method="#">
+                                        <form action="{{ url('/DoiMatKhau') }}" class="form border border-secondary" method="POST">
+                                        {{ csrf_field() }}
                                             <div class="form-body">
                                                 <div class="form-group">
                                                     <label for="password-vertical">Mật khẩu hiện tại</label>
                                                     <input type="password" id="password-vertical"
-                                                        class="form-control mt-2 py-2" name="contact"
+                                                        class="form-control mt-2 py-2" name="password"
                                                         placeholder="********">
+                                                    @if ($errors->has('password'))
+                                                    {{ $errors->first('password')}}
+                                                    @endif
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="password-vertical">Mật khẩu mới</label>
                                                     <input type="password" id="password-vertical"
-                                                        class="form-control mt-2 py-2" name="contact"
+                                                        class="form-control mt-2 py-2" name="new_password"
                                                         placeholder="********">
+                                                    @if ($errors->has('new_password'))
+                                                    {{ $errors->first('new_password')}}
+                                                    @endif
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="password-vertical">Xác nhận mật khẩu</label>
                                                     <input type="password" id="password-vertical"
-                                                        class="form-control mt-2 py-2" name="contact"
+                                                        class="form-control mt-2 py-2" name="password_confirmation"
                                                         placeholder="********">
+                                                    @if ($errors->has('password_confirmation'))
+                                                    {{ $errors->first('password_confirmation')}}
+                                                    @endif
                                                 </div>
                                             </div>
                                             <div class="form-actions d-flex justify-content-end mt-4">
-                                                <button type="reset" class="btn btn-light-primary me-2">Hủy bỏ</button>
+                                                <button type="reset" class="btn btn-light-primary me-2" onclick="window.location.href='/Index'">Hủy bỏ</button>
                                                 <button type="submit" class="btn btn-primary ">Lưu</button>
                                             </div>
                                         </form>
