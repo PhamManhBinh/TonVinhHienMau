@@ -19,8 +19,7 @@
 
 <body>
     <div id="app">
-        <div id="sidebar" class="active">
-        <div id="sidebar" class="active">
+      <div id="sidebar" class="active">
         <div class="sidebar-wrapper active">
           <div class="sidebar-header">
             <div class="d-flex align-items-center">
@@ -133,7 +132,7 @@
             <i data-feather="x"></i>
           </button>
         </div>
-        </div>
+      </div>
 
         <div id="main" class="layout-navbar">
             <header class="mb-3">

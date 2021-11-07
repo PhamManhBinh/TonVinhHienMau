@@ -23,14 +23,6 @@ Route::get('/Index', function (Request $request) {
     return redirect('/Login');
 });
 
-Route::get('/ImportBenhVien',function (Request $request) {
-    if(!$request->session()->has('username')){
-        return redirect('/Login');
-    }
-    return view('ImportBenhVien');
-});
-Route::post('/ImportBenhVien','App\Http\Controllers\ImportBVController@import');
-
 Route::get('/Login', function (Request $request) {
     if($request->session()->has('username')){
         return redirect('/Index');
@@ -81,3 +73,32 @@ Route::get('/XoaTaiKhoan/{Id}', 'App\Http\Controllers\SuaXoaTTController@destroy
 Route::post('/api/ImportBenhVien/Xoa','App\Http\Controllers\ApiKetQuaImportBV@Xoa');
 Route::post('/api/ImportBenhVien/Import','App\Http\Controllers\ApiKetQuaImportBV@Import');
 Route::post('/ImportBenhVien/ImportAll','App\Http\Controllers\ImportBVController@ImportAll');
+
+//Lịch sử tôn vinh
+Route::get('/TaoMoiTonVinh',function(){
+    return view('TaoMoiTonVinh');
+});
+Route::get('/XemKetQuaTonVinh',function(){
+    return view('XemKetQuaTonVinh');
+});
+Route::get('/DanhSachTonVinh',function(){
+    return view('DanhSachTonVinh');
+});
+
+//Import Bệnh Viện
+Route::get('/ImportBenhVien',function (Request $request) {
+    if(!$request->session()->has('username')){
+        return redirect('/Login');
+    }
+    return view('ImportBenhVien');
+});
+Route::post('/ImportBenhVien','App\Http\Controllers\ImportBVController@import');
+
+//Import Cơ Sở
+Route::get('/ImportCoSo',function (Request $request) {
+    if(!$request->session()->has('username')){
+        return redirect('/Login');
+    }
+    return view('ImportCoSo');
+});
+//Route::post('/ImportCoSo','App\Http\Controllers\ImportCoSoController@import');
