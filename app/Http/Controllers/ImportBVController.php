@@ -34,11 +34,14 @@ class ImportBVController extends Controller
         $filePath = $file->getRealPath();
 
         //check lỗi định dạng file
-        if($fileExtension!="xlsx"){
+        if($fileExtension == "xlsx"){
+            $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+        }elseif($fileExtension =="xls"){
+            $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
+        }else{
             return view('ImportBenhVien')->with(['status'=> 2, 'message'=>'Định dạng file không đúng!']);
         }
 
-        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
 		$spreadSheet = $reader->load($filePath);
 		$excelSheet = $spreadSheet->getActiveSheet();
         $highestRow = $excelSheet->getHighestRow(); // e.g. 10
@@ -104,7 +107,7 @@ class ImportBVController extends Controller
 
         for ($row = 1; $row <= $highestRow; ++$row) {
             $value = $excelSheet->getCellByColumnAndRow($columnArray[0], $row)->getValue();
-            if($value!=$stt){ continue; }
+            if($value != $stt){ continue; }
 
             //đọc từng dòng
             $model = $this->ReadRow($excelSheet,$row,$columnArray);

@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/Index');
 });
 
 Route::get('/Index', function (Request $request) {
@@ -95,10 +95,5 @@ Route::get('/ImportBenhVien',function (Request $request) {
 Route::post('/ImportBenhVien','App\Http\Controllers\ImportBVController@import');
 
 //Import Cơ Sở
-Route::get('/ImportCoSo',function (Request $request) {
-    if(!$request->session()->has('username')){
-        return redirect('/Login');
-    }
-    return view('ImportCoSo');
-});
-//Route::post('/ImportCoSo','App\Http\Controllers\ImportCoSoController@import');
+Route::get('/ImportCoSo','App\Http\Controllers\ImportCoSoController@getView');
+Route::post('/ImportCoSo','App\Http\Controllers\ImportCoSoController@importCoSo');
