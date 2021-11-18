@@ -2,8 +2,6 @@
 
 @section('title', 'Import Bệnh Viện')
 
-@section('quan-ly-import', 'active')
-
 @section('content')
 
             <div id="main-content">

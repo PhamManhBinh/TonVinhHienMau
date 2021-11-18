@@ -97,3 +97,14 @@ Route::post('/ImportBenhVien','App\Http\Controllers\ImportBVController@import');
 //Import Cơ Sở
 Route::get('/ImportCoSo','App\Http\Controllers\ImportCoSoController@getView');
 Route::post('/ImportCoSo','App\Http\Controllers\ImportCoSoController@importCoSo');
+Route::post('/api/EditMucTonVinh','App\Http\Controllers\ImportCoSoController@ApiEditMucTV');
+
+/*Lịch Sử Tôn Vinh*/ 
+//Tạo mới Tôn vinh
+Route::get('/TaoMoiTonVinh','App\Http\Controllers\LichSuTonVinhController@TaoMoiTonVinh');
+Route::post('/TaoMoiTonVinh','App\Http\Controllers\LichSuTonVinhController@TaoMoiTonVinhPost');
+//Xóa đợt tôn vinh
+Route::get('/XoaDotTonVinh','App\Http\Controllers\LichSuTonVinhController@XoaDotTonVinh');
+//Xem kết quả 1 năm bất kỳ
+Route::get('/XemKetQuaTonVinh','App\Http\Controllers\LichSuTonVinhController@XemKetQua');
+//Route::post('/TaoMoiTonVinh','App\Http\Controllers\ImportCoSoController@TaoMoiTonVinh');

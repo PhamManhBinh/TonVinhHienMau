@@ -3,8 +3,6 @@
 
 @section('title', 'Import Cơ Sở')
 
-@section('quan-ly-import', 'active')
-
 @section('content')
 
         <div id="main-content">

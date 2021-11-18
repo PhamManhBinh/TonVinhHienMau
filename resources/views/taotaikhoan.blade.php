@@ -2,8 +2,6 @@
 
 @section('title', 'Tạo Tài Khoản')
 
-@section('quan-ly-tai-khoan', 'active')
-
 @section('content')
 
       <div id="main-content">

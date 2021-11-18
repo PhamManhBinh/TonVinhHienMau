@@ -2,8 +2,6 @@
 
 @section('title', 'Kết Quả Import Bệnh Viện')
 
-@section('quan-ly-import', 'active')
-
 @section('content')
 
             @php

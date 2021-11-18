@@ -2,8 +2,6 @@
 
 @section('title', 'Tôn Vinh Hiến Máu')
 
-@section('trang-chu', 'active')
-
 @section('content')
 
         <div id="main-content">

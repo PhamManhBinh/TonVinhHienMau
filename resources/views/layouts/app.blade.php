@@ -49,71 +49,62 @@
                 </a>
               </li>
 
-              <li class="sidebar-item has-sub @yield('quan-ly-ton-vinh')">
+              <li class="sidebar-item has-sub {{ Request::is('ImportCoSo')||Request::is('TimKiemTonVinh') ? ' active' : '' }}">
                 <a href="#" class="sidebar-link">
                   <i class="bi bi-stack"></i>
                   <span>Quản lý tôn vinh</span>
                 </a>
                 <ul class="submenu ">
-                  <li class="submenu-item">
-                    <a href="{{ url('/KiemDuyetTonVinh') }}">Kiểm duyệt tôn vinh</a>
+                  <li class="submenu-item{{ Request::is('ImportCoSo') ? ' active' : '' }}">
+                    <a href="{{ url('/ImportCoSo') }}">Kiểm Duyệt Tôn Vinh</a>
                   </li>
-                  <li class="submenu-item ">
+                  <li class="submenu-item{{ Request::is('TimKiemTonVinh') ? 'active' : '' }}">
                     <a href="{{ url('/TimKiemTonVinh') }}"> Tìm kiếm thông tin </a>
                   </li>
                 </ul>
               </li>
 
-              <li class="sidebar-item has-sub @yield('lich-su-ton-vinh')">
+              <li class="sidebar-item has-sub {{ Request::is('TaoMoiTonVinh')||Request::is('XemKetQua') ? ' active' : '' }}">
                 <a href="#" class="sidebar-link">
                   <i class="bi bi-hexagon-fill"></i>
-                  <span>Lịch sử tôn vinh</span>
+                  <span>Lịch Sử Tôn Vinh</span>
                 </a>
                 <ul class="submenu">
-                  <li class="submenu-item">
-                    <a href="{{ url('/TaoMoiTonVinh') }}">Tạo mới tôn vinh</a>
+                  <li class="submenu-item{{ Request::is('TaoMoiTonVinh') ? ' active' : '' }}">
+                    <a href="{{ url('/TaoMoiTonVinh') }}">Tạo Mới Tôn Vinh</a>
                   </li>
-                  <li class="submenu-item">
-                    <a href="{{ url('/XemKetQua') }}">Xem kết quả</a>
+                  <li class="submenu-item{{ Request::is('XemKetQua') ? ' active' : '' }}">
+                    <a href="{{ url('/XemKetQuaTonVinh') }}">Xem Kết Quả</a>
                   </li>
                 </ul>
               </li>
 
-              <li class="sidebar-item @yield('quan-ly-nguon-mau')">
+              <li class="sidebar-item has-sub {{ Request::is('ImportBenhVien') ? ' active' : '' }}">
                 <a href="#" class="sidebar-link">
                   <i class="bi bi-droplet-fill"></i>
                   <span>Quản lý nguồn máu</span>
                 </a>
-              </li>
-
-              <li class="sidebar-item has-sub @yield('quan-ly-import')">
-                <a href="#" class="sidebar-link">
-                  <i class="bi bi-file-earmark-spreadsheet-fill"></i>
-                  <span>Quản lý import</span>
-                </a>
                 <ul class="submenu">
-                  <li class="submenu-item">
-                    <a href="{{ url('/ImportCoSo') }}">Cơ sở</a>
-                  </li>
-                  <li class="submenu-item">
-                    <a href="{{ url('/ImportBenhVien') }}">Bệnh viện</a>
+                  <li class="submenu-item{{ Request::is('ImportBenhVien') ? ' active' : '' }}">
+                    <a href="{{ url('/ImportBenhVien') }}">Import Từ Bệnh viện</a>
                   </li>
                 </ul>
               </li>
 
-              <li class="sidebar-item has-sub @yield('quan-ly-tai-khoan')">
+
+              <li class="sidebar-item has-sub {{ Request::is('TaoTaiKhoan')||Request::is('DoiMatKhau')||Request::is('UpdateTaiKhoan') ? ' active' : '' }}">
                 <a href="#" class="sidebar-link">
                   <i class="bi bi-person-badge-fill"></i>
                   <span>Quản lý tài khoản</span>
                 </a>
                 <ul class="submenu">
-                  <li class="submenu-item">
+                  <li class="submenu-item{{ Request::is('TaoTaiKhoan') ? ' active' : '' }}">
                     <a href="{{ url('/TaoTaiKhoan') }}">Tạo tài khoản</a>
                   </li>
-                  <li class="submenu-item">
+                  <li class="submenu-item{{ Request::is('DoiMatKhau') ? ' active' : '' }}">
                     <a href="{{ url('/DoiMatKhau') }}">Đổi mật khẩu</a>
                   </li>
-                  <li class="submenu-item ">
+                  <li class="submenu-item{{ Request::is('UpdateTaiKhoan') ? ' active' : '' }} ">
                     <a href="{{ url('/UpdateTaiKhoan') }}">Sửa/Xóa tài khoản</a>
                   </li>
                 </ul>

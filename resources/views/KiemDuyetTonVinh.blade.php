@@ -2,8 +2,6 @@
 
 @section('title', 'Kiểm Duyệt Tôn Vinh')
 
-@section('quan-ly-import', 'active')
-
 @section('content')
         <div id="main-content">
           <div class="page-heading">
@@ -88,13 +86,17 @@
                                   <td class="text-bold-500">{{ $data[$i][$j]->NoiLamViec ?? "-" }}</td>
                                   <td>{{ $data[$i][$j]->SDT ?? "-" }}</td>
                                   <td>{{ $data[$i][$j]->DiaChi ?? "-"}}</td>
-                                  <td>{{ $data[$i][$j]->MucTonVinh }}</td>
+                                  <td>{{ $data[$i][$j]->SoLanHien }}</td>
                                   <td>{{ $data[$i][$j]->Nhom_ABO }}</td>
                                   <td>{{ $data[$i][$j]->Nhom_Rh ?? "-"}}</td>
                                   <td>{{ $data[$i][$j]->MucTonVinh }}</td>
                                   <td></td>
                                   <td></td>
-                                  <td></td>
+                                  <td>
+                                    @if($data[$i][$j]->flag=='warning')
+                                      <img src="assets/images/logo/high_priority_48px.png" alt="" />
+                                    @endif
+                                  </td>
                                 </tr>
 								                @else
 								
@@ -112,23 +114,104 @@
                                   <td>{{ $data[$i][$j]->Nhom_ABO }}</td>
                                   <td>{{ $data[$i][$j]->Nhom_Rh }}</td>
                                   <td>
-                                    <select class="select-no-width mb-2 ms-sm-2" id="basicSelect">
-                                      <option>Không</option>
-                                      <option>Mức 5</option>
-                                      <option selected="selected">Mức 10</option>
-                                      <option>Mức 15</option>
-                                      <option>Mức 20</option>
-                                      <option>Mức 30</option>
-                                      <option>Mức 40</option>
+                                    <select class="select-no-width mb-2 ms-sm-2" id="basicSelect" onchange="EditMucTV({{ $data[$i][$j]->Id }},this);">
+                                      <option value="0">Không</option>
+                                      <option value="5" {{ ($data[$i][$j]->MucTonVinh==5) ? ' selected="selected"' : '' }}>Mức 5</option>
+                                      <option value="10" {{ ($data[$i][$j]->MucTonVinh==10) ? ' selected="selected"' : '' }}>Mức 10</option>
+                                      <option value="15" {{ ($data[$i][$j]->MucTonVinh==15) ? ' selected="selected"' : '' }}>Mức 15</option>
+                                      <option value="20" {{ ($data[$i][$j]->MucTonVinh==20) ? ' selected="selected"' : '' }}>Mức 20</option>
+                                      <option value="30" {{ ($data[$i][$j]->MucTonVinh==30) ? ' selected="selected"' : '' }}>Mức 30</option>
+                                      <option value="40" {{ ($data[$i][$j]->MucTonVinh==40) ? ' selected="selected"' : '' }}>Mức 40</option>
                                     </select>
-                                    <img src="assets/images/logo/green_circle_48px.png" />
+                                    @if( $data[$i][$j]->flag == "green")
+                                      <img src="assets/images/logo/green_circle_48px.png" />
+                                    @elseif( $data[$i][$j]->flag == "yellow")
+                                      <img src="assets/images/logo/yellow_circle_48px.png" />
+                                    @else
+                                      <img src="assets/images/logo/red_circle_48px.png" />
+                                    @endif
                                   </td>
-                                  <td><img src="assets/images/logo/5_48px.png" /></td>
-                                  <td>2019</td>
+                                  <td>
+                                    <!--<img src="assets/images/logo/5_48px.png" />-->
+                                    @if( $data[$i][$j]->Muc_5 != NULL )
+                                      <img src="assets/images/logo/5_48px.png" />
+                                    @endif
+                                    @if( $data[$i][$j]->Muc_10 != NULL )
+                                      <img src="assets/images/logo/10_48px.png" />
+                                    @endif
+                                    @if( $data[$i][$j]->Muc_15 != NULL )
+                                      <img src="assets/images/logo/15_48px.png" />
+                                    @endif
+                                    @if( $data[$i][$j]->Muc_20 != NULL )
+                                      <img src="assets/images/logo/20_48px.png" />
+                                    @endif
+                                    @if( $data[$i][$j]->Muc_30 != NULL )
+                                      <img src="assets/images/logo/30_48px.png" />
+                                    @endif
+                                    @if( $data[$i][$j]->Muc_40 != NULL )
+                                      <img src="assets/images/logo/40_48px.png" />
+                                      @endif
+                                    @if( $data[$i][$j]->Muc_50 != NULL )
+                                      <img src="assets/images/logo/50_48px.png" />
+                                    @endif
+                                    @if( $data[$i][$j]->Muc_60 != NULL )
+                                      <img src="assets/images/logo/60_48px.png" />
+                                    @endif
+                                    @if( $data[$i][$j]->Muc_70 != NULL )
+                                      <img src="assets/images/logo/70_48px.png" />
+                                    @endif
+                                    @if( $data[$i][$j]->Muc_80 != NULL )
+                                      <img src="assets/images/logo/80_48px.png" />
+                                    @endif
+                                    @if( $data[$i][$j]->Muc_90 != NULL )
+                                      <img src="assets/images/logo/90_48px.png" />
+                                    @endif
+                                    @if( $data[$i][$j]->Muc_100 != NULL )
+                                      <img src="assets/images/logo/100_48px.png" />
+                                    @endif
+                                  </td>
+                                  <td>
+                                    @if( $data[$i][$j]->Muc_5 != NULL )
+                                      {{ date("Y",strtotime(str_replace('-','/', $data[$i][$j]->Muc_5))) }}<br>
+                                    @endif
+                                    @if( $data[$i][$j]->Muc_10 != NULL )
+                                      {{ date("Y",strtotime(str_replace('-','/', $data[$i][$j]->Muc_10))) }}<br>
+                                    @endif
+                                    @if( $data[$i][$j]->Muc_15 != NULL )
+                                      {{ date("Y",strtotime(str_replace('-','/', $data[$i][$j]->Muc_15))) }}<br>
+                                    @endif
+                                    @if( $data[$i][$j]->Muc_20 != NULL )
+                                      {{ date("Y",strtotime(str_replace('-','/', $data[$i][$j]->Muc_20))) }}<br>
+                                    @endif
+                                    @if( $data[$i][$j]->Muc_30 != NULL )
+                                      {{ date("Y",strtotime(str_replace('-','/', $data[$i][$j]->Muc_30))) }}<br>
+                                    @endif
+                                    @if( $data[$i][$j]->Muc_40 != NULL )
+                                      {{ date("Y",strtotime(str_replace('-','/', $data[$i][$j]->Muc_40))) }}<br>
+                                      @endif
+                                    @if( $data[$i][$j]->Muc_50 != NULL )
+                                      {{ date("Y",strtotime(str_replace('-','/', $data[$i][$j]->Muc_50))) }}<br>
+                                    @endif
+                                    @if( $data[$i][$j]->Muc_60 != NULL )
+                                      {{ date("Y",strtotime(str_replace('-','/', $data[$i][$j]->Muc_60))) }}<br>
+                                    @endif
+                                    @if( $data[$i][$j]->Muc_70 != NULL )
+                                      {{ date("Y",strtotime(str_replace('-','/', $data[$i][$j]->Muc_70))) }}<br>
+                                    @endif
+                                    @if( $data[$i][$j]->Muc_80 != NULL )
+                                      {{ date("Y",strtotime(str_replace('-','/', $data[$i][$j]->Muc_80))) }}<br>
+                                    @endif
+                                    @if( $data[$i][$j]->Muc_90 != NULL )
+                                      {{ date("Y",strtotime(str_replace('-','/', $data[$i][$j]->Muc_90))) }}<br>
+                                    @endif
+                                    @if( $data[$i][$j]->Muc_100 != NULL )
+                                      {{ date("Y",strtotime(str_replace('-','/', $data[$i][$j]->Muc_100))) }}
+                                    @endif
+                                  </td>
                                   <td></td>
                                 </tr>
-								@endif
-								@endfor
+                                @endif
+                                @endfor
                                 <tr>
                                   <td colspan="13" style="text-align: right">
                                     <button
@@ -141,8 +224,45 @@
                                   </td>
                                 </tr>
                               </tbody>
-							@endfor
+                            @endfor
                               
+                            
+                            @for ($j = 0; $j < count($dataWarning); $j++)
+							            	<tbody>
+                                <tr style="background: rgba(67, 190, 133, 0.25)">
+                                  <td>
+                                    {{ $j + $i + 1 }}
+                                    <img class="icon" src="assets/images/logo/excel.png" />
+                                  </td>
+                                  <td class="text-bold-500">{{ $dataWarning[$j]->HoTen }}</td>
+                                  <td>{{ $dataWarning[$j]->NgaySinh->format('d/m/Y') }}</td>
+                                  <td class="text-bold-500">{{ $dataWarning[$j]->NoiLamViec ?? "-" }}</td>
+                                  <td>{{ $dataWarning[$j]->SDT ?? "-" }}</td>
+                                  <td>{{ $dataWarning[$j]->DiaChi ?? "-"}}</td>
+                                  <td>{{ $dataWarning[$j]->SoLanHien }}</td>
+                                  <td>{{ $dataWarning[$j]->Nhom_ABO }}</td>
+                                  <td>{{ $dataWarning[$j]->Nhom_Rh ?? "-"}}</td>
+                                  <td>{{ $dataWarning[$j]->MucTonVinh }}</td>
+                                  <td></td>
+                                  <td></td>
+                                  <td>
+                                      <img src="assets/images/logo/high_priority_48px.png" alt="" />
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td colspan="13" style="text-align: right">
+                                    <button
+                                      class="btn-width btn-primary"
+                                      type="button"
+                                      id="btn-import"
+                                    >
+                                      Apply
+                                    </button>
+                                  </td>
+                                </tr>
+                              </tbody>
+							              @endfor
+
                             </table>
                           </div>
                           <!-- Button -->
@@ -154,13 +274,14 @@
                             >
                               Thêm vào danh sách xử lý riêng
                             </button>
-                            <button
+                            <a
+                              href="{{ url('/TimKienTonVinh') }}"
                               class="btn-width btn-primary btn-set ms-3"
                               type="button"
                               id="btn-tim-tc"
                             >
                               Tìm thủ công
-                            </button>
+                            </a>
                           </div>
                         </div>
                       </div>
@@ -171,4 +292,20 @@
             </section>
           </div>
         </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+    function EditMucTV(id,sel) {
+      $.ajax({
+            url: "/api/EditMucTonVinh",
+            method: "POST",
+            data: { "_token": "{{ csrf_token() }}", Id: id, MucTV: sel.value },
+            success: function () {
+                alert("Thay đổi thành công!");
+            },
+            error: function(){
+              alert("Không thể thay đổi thành mức tôn vinh này!");
+            }
+      })
+    }
+    </script>
 @endsection
