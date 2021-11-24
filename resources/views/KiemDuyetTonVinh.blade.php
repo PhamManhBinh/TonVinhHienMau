@@ -275,7 +275,7 @@
                               Thêm vào danh sách xử lý riêng
                             </button>
                             <a
-                              href="{{ url('/TimKienTonVinh') }}"
+                              href="{{ url('/TimKiemTonVinh') }}"
                               class="btn-width btn-primary btn-set ms-3"
                               type="button"
                               id="btn-tim-tc"

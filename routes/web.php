@@ -108,3 +108,9 @@ Route::get('/XoaDotTonVinh','App\Http\Controllers\LichSuTonVinhController@XoaDot
 //Xem kết quả 1 năm bất kỳ
 Route::get('/XemKetQuaTonVinh','App\Http\Controllers\LichSuTonVinhController@XemKetQua');
 //Route::post('/TaoMoiTonVinh','App\Http\Controllers\ImportCoSoController@TaoMoiTonVinh');
+
+// Tìm kiếm thông tin
+Route::get('/TimKiemTonVinh', 'App\Http\Controllers\TimKiemController@index');
+Route::get('/TimKiemTonVinh', 'App\Http\Controllers\TimKiemController@search');
+
+Route::get('/test', 'App\Http\Controllers\ImportCoSoController@GETDATA');

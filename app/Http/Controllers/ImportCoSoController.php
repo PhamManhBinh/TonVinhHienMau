@@ -310,5 +310,10 @@ class ImportCoSoController extends Controller
         return response('404')->setStatusCode(404);
     }
 
+    public function GETDATA(){
+        $data = DB::table('nguoihienmau')->get();
+        return json_decode($data);
+    }
+
     
 }
