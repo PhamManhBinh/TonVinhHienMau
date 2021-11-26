@@ -31,6 +31,8 @@
                   <div class="card">
                     <div class="card-content">
                       <div class="card-body">
+                      <form action ="">
+                      {{ csrf_field() }}
                         <div class="row">
                           <div class="text-center mt-4 mb-5">
                             <h3>DANH SÁCH KIỂM DUYỆT CÁC ĐỀ XUẤT TÔN VINH</h3>
@@ -39,7 +41,7 @@
                           <div id="btn-right">
                             <button
                               class="btn btn-primary btn-set"
-                              type="button"
+                              type="submit"
                               id="btn-apply-all"
                             >
                               Apply All
@@ -104,6 +106,7 @@
                                   <td>
                                   {{ $i + 1 }}
                                     <img class="icon" src="assets/images/logo/database_16px.png" />
+                                    <input type="hidden" name="dataID[]" value="{{ $data[$i][0]->Id }}"/>
                                   </td>
                                   <td class="text-bold-500"></td>
                                   <td></td>
@@ -114,7 +117,7 @@
                                   <td>{{ $data[$i][$j]->Nhom_ABO }}</td>
                                   <td>{{ $data[$i][$j]->Nhom_Rh }}</td>
                                   <td>
-                                    <select class="select-no-width mb-2 ms-sm-2" id="select-{{ $data[$i][0]->Id }}">
+                                    <select class="select-no-width mb-2 ms-sm-2" id="select-{{ $data[$i][0]->Id }}" name="dataSelect[]">
                                       <option value="0">Không</option>
                                       <option value="5" {{ ($data[$i][$j]->MucTonVinh==5) ? ' selected="selected"' : '' }}>Mức 5</option>
                                       <option value="10" {{ ($data[$i][$j]->MucTonVinh==10) ? ' selected="selected"' : '' }}>Mức 10</option>
@@ -285,6 +288,7 @@
                             </a>
                           </div>
                         </div>
+                      </form>
                       </div>
                     </div>
                   </div>
@@ -310,5 +314,20 @@
             }
       })
     }
+    $("form").on("submit", function (e) {
+    var dataString = $(this).serialize();
+     
+    $.ajax({
+      type: "POST",
+      url: "/ImportCoSo/ImportAll",
+      data: dataString,
+      success: function () {
+        alert("Apply thành công!");
+      $("#btn-apply-all").remove();
+      }
+    });
+ 
+    e.preventDefault();
+    });
     </script>
 @endsection

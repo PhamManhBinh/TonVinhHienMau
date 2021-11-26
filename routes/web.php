@@ -113,4 +113,4 @@ Route::get('/XemKetQuaTonVinh','App\Http\Controllers\LichSuTonVinhController@Xem
 Route::get('/TimKiemTonVinh', 'App\Http\Controllers\TimKiemController@index');
 Route::get('/TimKiemTonVinh', 'App\Http\Controllers\TimKiemController@search');
 
-Route::get('/test', 'App\Http\Controllers\ImportCoSoController@GETDATA');
+Route::post('/ImportCoSo/ImportAll','App\Http\Controllers\ImportCoSoController@ImportAll');

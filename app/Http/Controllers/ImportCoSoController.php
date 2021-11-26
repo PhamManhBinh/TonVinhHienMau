@@ -39,6 +39,12 @@ class ImportCoSoController extends Controller
             return back()->with('message','Bạn chưa chọn file!');
         }
 
+        //check xem có tạo đợt tôn vinh chưa
+        $checkQuery = DB::select('SELECT * FROM tonvinh WHERE YEAR(DATE(ThoiGian)) = YEAR(CURDATE()) AND MONTH(DATE(ThoiGian)) = MONTH(CURDATE())');
+        if(!$checkQuery){
+            return back()->with('message','Vui lòng tạo đợt tôn vinh trước!');
+        }
+
         //get file, định dạng file và đường dẫn
         $file = $request->file('myFile');
         $fileExtension = $file->getClientOriginalExtension();
@@ -313,9 +319,17 @@ class ImportCoSoController extends Controller
         
     }
 
-    public function GETDATA(){
-        $data = DB::table('nguoihienmau')->get();
-        return json_decode($data);
+    public function ImportAll(Request $request){
+        if(isset($request['dataID']) && isset($request['dataSelect'])){
+            $dataID = $request['dataID'];
+            $dataSelect = $request['dataSelect'];
+            for($i=0;$i<count($dataID);$i++){
+                //try{
+                    DB::update('UPDATE exceltonvinh SET MucTonVinh=? WHERE Id=?',[$dataSelect[$i],$dataID[$i]]);
+                //}catch(Exception $exception){}
+            }
+        }
+        echo 'ok';
     }
 
     
