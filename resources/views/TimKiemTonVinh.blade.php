@@ -261,11 +261,11 @@ function sortTable(idTable,rowIndex) {
       one from current row and one from the next:*/
       x = rows[i].getElementsByTagName("TD")[rowIndex];
       y = rows[i + 1].getElementsByTagName("TD")[rowIndex];
-      //check if the two rows should switch place:
       if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
         //if so, mark as a switch and break the loop:
         shouldSwitch = true;
         break;
+        
       }
     }
     if (shouldSwitch) {

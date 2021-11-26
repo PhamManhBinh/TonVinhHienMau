@@ -53,6 +53,7 @@
                                     aria-describedby="inputGroupFileAddon04"
                                     aria-label="Upload"
                                     name="myFile"
+                                    accept=".xls,.xlsx"
                                   />
                                   <button class="btn btn-primary" type="submit" id="import-quynhon">
                                     View

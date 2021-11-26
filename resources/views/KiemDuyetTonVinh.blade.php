@@ -73,7 +73,7 @@
                                 </tr>
                               </thead>
                               @for($i = 0; $i < count($data); $i++)
-                              <tbody>
+                              <tbody id="tbody_{{ $data[$i][0]->Id }}">
                               @for ($j = 0; $j < count($data[$i]); $j++)
                               @if ($j == 0)
                                 <tr style="background: rgba(67, 190, 133, 0.25)">
@@ -102,7 +102,7 @@
 								
                                 <tr>
                                   <td>
-                                    1
+                                  {{ $i + 1 }}
                                     <img class="icon" src="assets/images/logo/database_16px.png" />
                                   </td>
                                   <td class="text-bold-500"></td>
@@ -114,7 +114,7 @@
                                   <td>{{ $data[$i][$j]->Nhom_ABO }}</td>
                                   <td>{{ $data[$i][$j]->Nhom_Rh }}</td>
                                   <td>
-                                    <select class="select-no-width mb-2 ms-sm-2" id="basicSelect" onchange="EditMucTV({{ $data[$i][$j]->Id }},this);">
+                                    <select class="select-no-width mb-2 ms-sm-2" id="select-{{ $data[$i][0]->Id }}">
                                       <option value="0">Không</option>
                                       <option value="5" {{ ($data[$i][$j]->MucTonVinh==5) ? ' selected="selected"' : '' }}>Mức 5</option>
                                       <option value="10" {{ ($data[$i][$j]->MucTonVinh==10) ? ' selected="selected"' : '' }}>Mức 10</option>
@@ -218,6 +218,7 @@
                                       class="btn-width btn-primary"
                                       type="button"
                                       id="btn-import"
+                                      onclick="EditMucTV({{ $data[$i][0]->Id }});"
                                     >
                                       Apply
                                     </button>
@@ -294,12 +295,14 @@
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
-    function EditMucTV(id,sel) {
+    function EditMucTV(id) {
+      var valueSelected = $("#select-"+id).children(":selected").val();
       $.ajax({
             url: "/api/EditMucTonVinh",
             method: "POST",
-            data: { "_token": "{{ csrf_token() }}", Id: id, MucTV: sel.value },
+            data: { "_token": "{{ csrf_token() }}", Id: id, MucTV: valueSelected },
             success: function () {
+                $("#tbody_"+id).remove();
                 alert("Thay đổi thành công!");
             },
             error: function(){

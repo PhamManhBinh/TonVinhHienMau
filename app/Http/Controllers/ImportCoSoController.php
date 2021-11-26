@@ -75,8 +75,8 @@ class ImportCoSoController extends Controller
         $listDuplicate = array();
         $listWarning = array();
         $this->XuLy($data,$listDuplicate,$listWarning);
-
-        //dd($dataView);
+        
+        //print_r($listDuplicate);
         return view('KiemDuyetTonVinh')->with(['data'=>$listDuplicate,'dataWarning'=>$listWarning]);
     }
 
@@ -95,13 +95,12 @@ class ImportCoSoController extends Controller
             if($listResult == null){
                 $model->save();
                 array_push($listWarning,clone $model);
-
             }else{
                 $tempArray = array();
+                $model->save();
                 array_push($tempArray,clone $model);
                 foreach($listResult as $result){
                     $this->setFlag($result,$model->MucTonVinh);
-                    $model->save();
                     array_push($tempArray,clone $result);
                 }
                 array_push($listDuplicate,$tempArray);
@@ -213,7 +212,7 @@ class ImportCoSoController extends Controller
             
             if($value!== $stt){ continue; }
             //đọc từng dòng
-            $model = new ExcelTonVinh;
+            $model = new ExcelTonVinh();
             $model = $this->ReadRow($excelSheet,$row,$columnArray);
             $stt += 1;          
             array_push($list,$model);
@@ -268,7 +267,7 @@ class ImportCoSoController extends Controller
 
     //hàm đọc 1 dòng file excel
     protected function ReadRow($excelSheet,$row,$columnArray){
-        $model = new ExcelTonVinh;
+        $model = new ExcelTonVinh();
         $model->HoTen = $excelSheet->getCellByColumnAndRow($columnArray[1], $row)->getValue();
         $ngaySinh = $excelSheet->getCellByColumnAndRow($columnArray[2], $row)->getValue();
         $thangSinh = $excelSheet->getCellByColumnAndRow($columnArray[3], $row)->getValue();
@@ -301,13 +300,17 @@ class ImportCoSoController extends Controller
 
         $id = $request['Id'];
         $mucTonVinh = $request['MucTV'];
-
-        $status = DB::update('UPDATE nguoihienmau SET Muc_'.$mucTonVinh.'=? WHERE Id=? AND Muc_'.$mucTonVinh.' IS NULL',[date("Y-m-d"),$id]);
         
-        if($status>0){
-            return response('200')->setStatusCode(200);
+        if(!ExcelTonVinh::find($id)){
+            return response('404')->setStatusCode(404);
         }
-        return response('404')->setStatusCode(404);
+
+        $status = DB::update('UPDATE exceltonvinh SET MucTonVinh=? WHERE Id=?',[$mucTonVinh,$id]);
+        
+        
+        return response('200')->setStatusCode(200);
+        
+        
     }
 
     public function GETDATA(){

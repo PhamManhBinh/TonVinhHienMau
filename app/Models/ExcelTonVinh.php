@@ -7,6 +7,7 @@ class ExcelTonVinh extends Model
 {
     protected $table = 'exceltonvinh';
     protected $primaryKey = 'Id';
+    public $id;
     public $SoLanHien;
     public $flag;
     /*public $Id;
