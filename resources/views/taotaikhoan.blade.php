@@ -83,6 +83,9 @@
                                     <div class="form-group">
                                       <label for="password-vertical">Xác nhận mật khẩu</label>
                                       <input type="password" id="password-confirm" class="form-control mt-2 py-2" name="password_confirm" placeholder="********">
+                                      @if ($errors->has('password_confirm'))
+                                      {{ $errors->first('password_confirm')}}
+                                      @endif
                                     </div>
                                   </div>
                                   <div class="form-actions d-flex justify-content-end mt-4">

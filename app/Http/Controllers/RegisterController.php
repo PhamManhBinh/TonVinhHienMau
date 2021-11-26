@@ -20,7 +20,8 @@ class RegisterController extends Controller
       'email' => 'required|email|string',
       'phone' => 'required|min:10|string',
       'username' => 'required|max:30|string',
-      'password' => 'required|min:5',
+      'password' => 'required|min:5|same:password',
+      'password_confirm' => 'required|min:5|same:password',
     ]);
     $user = DB::table('users')->where('UserName', $request->username)->first();
     if (!$user) {
