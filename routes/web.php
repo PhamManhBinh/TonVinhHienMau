@@ -114,3 +114,7 @@ Route::get('/TimKiemTonVinh', 'App\Http\Controllers\TimKiemController@index');
 Route::get('/TimKiemTonVinh', 'App\Http\Controllers\TimKiemController@search');
 
 Route::post('/ImportCoSo/ImportAll','App\Http\Controllers\ImportCoSoController@ImportAll');
+
+Route::get('/KetQuaTonVinh', 'App\Http\Controllers\KetQuaTonVinhController@XemKetQua');
+Route::post('/XacNhan', 'App\Http\Controllers\KetQuaTonVinhController@XacNhan');
+Route::post('/XuatExcel', 'App\Http\Controllers\KetQuaTonVinhController@XuatExcel');

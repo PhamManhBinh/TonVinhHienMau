@@ -16,7 +16,9 @@ Use Exception;
 class ImportCoSoController extends Controller
 {
     private $MaDonVi;
+    private $MaDotTonVinh;
     private $TenFile;
+    private $max=0;
 
     public function getView(Request $request)
     {
@@ -40,10 +42,11 @@ class ImportCoSoController extends Controller
         }
 
         //check xem có tạo đợt tôn vinh chưa
-        $checkQuery = DB::select('SELECT * FROM tonvinh WHERE YEAR(DATE(ThoiGian)) = YEAR(CURDATE()) AND MONTH(DATE(ThoiGian)) = MONTH(CURDATE())');
-        if(!$checkQuery){
+        $Id = DB::select('SELECT Id FROM tonvinh WHERE YEAR(DATE(ThoiGian)) = YEAR(CURDATE()) AND MONTH(DATE(ThoiGian)) = MONTH(CURDATE())');
+        if(!$Id){
             return back()->with('message','Vui lòng tạo đợt tôn vinh trước!');
         }
+        $this->MaDotTonVinh = $Id[0]->Id;
 
         //get file, định dạng file và đường dẫn
         $file = $request->file('myFile');
@@ -83,7 +86,7 @@ class ImportCoSoController extends Controller
         $this->XuLy($data,$listDuplicate,$listWarning);
         
         //print_r($listDuplicate);
-        return view('KiemDuyetTonVinh')->with(['data'=>$listDuplicate,'dataWarning'=>$listWarning]);
+        return view('KiemDuyetTonVinh')->with(['data'=>$listDuplicate,'dataWarning'=>$listWarning,'idTV'=>$this->MaDotTonVinh,'max'=>$this->max]);
     }
 
     protected function XuLy($list,&$listDuplicate,&$listWarning){
@@ -294,7 +297,9 @@ class ImportCoSoController extends Controller
 
         $model->SoLanHien = $SoLanHien;
         $model->MucTonVinh = $this->MucTonVinh($i-1);
+        if($model->MucTonVinh > $this->max) $this->max = $model->MucTonVinh;
         $model->MaDonVi = $this->MaDonVi;
+        $model->MaDotTonVinh = $this->MaDotTonVinh;
         $model->TenFile = $this->TenFile;
         return $model;
     }

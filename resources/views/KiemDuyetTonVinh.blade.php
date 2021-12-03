@@ -46,13 +46,14 @@
                             >
                               Apply All
                             </button>
-                            <button
+                            <a
                               class="btn btn-primary btn-set ms-3"
                               type="button"
                               id="btn-ket-qua"
+                              href="{{ url('/KetQuaTonVinh?id='.$idTV.'&max='.$max) }}"
                             >
                               Kết quả
-                            </button>
+                            </a>
                           </div>
                           <div class="line-set mb-4"></div>
                           <div class="table-responsive">
