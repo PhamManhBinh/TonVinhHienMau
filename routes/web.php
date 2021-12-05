@@ -112,6 +112,9 @@ Route::get('/XemKetQuaTonVinh','App\Http\Controllers\LichSuTonVinhController@Xem
 // Tìm kiếm thông tin
 Route::get('/TimKiemTonVinh', 'App\Http\Controllers\TimKiemController@index');
 Route::get('/TimKiemTonVinh', 'App\Http\Controllers\TimKiemController@search');
+// Cập nhập thông tin tìm kiếm
+Route::get('/TimKiemTonVinh/{Id}', 'App\Http\Controllers\TimKiemController@edit');
+Route::post('/TimKiemTonVinh/{Id}', 'App\Http\Controllers\TimKiemController@update');
 
 Route::post('/ImportCoSo/ImportAll','App\Http\Controllers\ImportCoSoController@ImportAll');
 

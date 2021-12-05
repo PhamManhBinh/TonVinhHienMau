@@ -335,4 +335,6 @@
             </section>
           </div>
         </div>
+    <script src="{{  url('assets/vendors/apexcharts/apexcharts.js') }}"></script>
+    <script src="{{  url('assets/js/pages/dashboard.js') }}""></script>
   @endsection

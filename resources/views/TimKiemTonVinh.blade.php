@@ -133,20 +133,7 @@
                       <div class="line-set"></div>
                       <div class="card-body">
                         <div class="text-center">
-                          <h6 style="font-size: 19px;">Bạn đang tìm thông tin cho</h6><br>
-                          <table class="mx-auto">
-                            <tr>
-                              <td class="text-set">Phạm Thanh Hoàng</td>
-                              <td class="text-set">10/05/1993</td>
-                              <td class="text-set">Phù Mỹ - Bình Định</td>
-                              <td class="text-set">038749735</td>
-                              <td class="text-set">Xã Hiệp Mỹ-Huyện Phù Mỹ-Bình Định</td>
-                              <td class="text-set">10</td>
-                              <td class="text-set">A</td>
-                              <td class="text-set">-</td>
-                              <td class="text-set">Mức 10</td>
-                            </tr>
-                          </table>
+                          <h6 style="font-size: 19px;">Kết Quả Tìm Kiếm</h6><br>
                         </div>
                       </div>
                       <div class="table-responsive">
@@ -215,7 +202,7 @@
                                 <img src="assets/images/logo/100_48px.png" />
                               @endif
                               </td>
-                              <td><a href="#" class="btn btn-primary btn-size">Sửa</a></td>
+                              <td><a href="/TimKiemTonVinh/{{$pep->Id}}" class="btn btn-primary btn-size">Sửa</a></td>
                               <td><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></td>
                             </tr>
                             @endforeach
