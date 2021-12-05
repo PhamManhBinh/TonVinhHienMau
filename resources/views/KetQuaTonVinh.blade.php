@@ -251,18 +251,20 @@
             })
         }
         function XacNhan(id){
+          if (confirm('Bạn chắc chắn muốn xác nhận thông tin không?')) {
             $.ajax({
                 url: "/XacNhan",
                 method: "POST",
                 data: { "_token": "{{ csrf_token() }}", Id: id },
                 success: function () {
                     $("#btn-xac-nhan").hide();
-                    alert("ok");
+                    alert("Lưu thông tin thành công!");
                 },
                 error: function(){
-                    alert("Không thể thay đổi thành mức tôn vinh này!");
+                    alert("Đã xảy ra lỗi!");
                 }
             })
+          }
         }
         </script>
 @endsection

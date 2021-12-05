@@ -21,6 +21,17 @@ class KetQuaTonVinhController extends Controller
     public function XacNhan(Request $request){
         //lưu kết quả tôn vinh từ bảng exceltonvinh vào bảng người hiến máu
         //tham số đợt hiến máu
+        $Id = $request->Id;
+        $exceltonvinh = DB::table('exceltonvinh')->where('MaDotTonVinh',$Id)->get();
+        $thoigianTV = DB::select('SELECT ThoiGian FROM tonvinh where Id='.$Id)[0]->ThoiGian;
+        
+        foreach($exceltonvinh as $item){
+        
+            DB::table('nguoihienmau')->where('HoTen',$item->HoTen)->where('NgaySinh',$item->NgaySinh)->where('Nhom_ABO',$item->Nhom_ABO)->update(['Muc_'.$item->MucTonVinh => $thoigianTV, 'Muc_'.$item->MucTonVinh.'_donvi' => $item->MaDonVi]);
+            
+        } 
+        
+        return response('200')->setStatusCode(200);
     }
     public function XuatExcel(Request $request){
         //xuất ra file excel
