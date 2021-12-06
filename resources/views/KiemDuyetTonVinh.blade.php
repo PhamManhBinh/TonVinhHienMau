@@ -50,7 +50,7 @@
                               class="btn btn-primary btn-set ms-3"
                               type="button"
                               id="btn-ket-qua"
-                              href="{{ url('/KetQuaTonVinh?id='.$idTV.'&max='.$max) }}"
+                              href="{{ url('/KetQuaTonVinh?id='.$idTV.'&dv='.$idDV.'&max='.$max) }}"
                             >
                               Kết quả
                             </a>
@@ -233,11 +233,12 @@
                               
                             
                             @for ($j = 0; $j < count($dataWarning); $j++)
-							            	<tbody>
+							            	<tbody id="tbody_{{ $dataWarning[$j]->Id }}">
                                 <tr style="background: rgba(67, 190, 133, 0.25)">
                                   <td>
                                     {{ $j + $i + 1 }}
                                     <img class="icon" src="assets/images/logo/excel.png" />
+                                    <input type="hidden" name="dataID[]" value="{{ $dataWarning[$j]->Id }}"/>
                                   </td>
                                   <td class="text-bold-500">{{ $dataWarning[$j]->HoTen }}</td>
                                   <td>{{ $dataWarning[$j]->NgaySinh->format('d/m/Y') }}</td>
@@ -247,7 +248,9 @@
                                   <td>{{ $dataWarning[$j]->SoLanHien }}</td>
                                   <td>{{ $dataWarning[$j]->Nhom_ABO }}</td>
                                   <td>{{ $dataWarning[$j]->Nhom_Rh ?? "-"}}</td>
-                                  <td>{{ $dataWarning[$j]->MucTonVinh }}</td>
+                                  <td>{{ $dataWarning[$j]->MucTonVinh }}
+                                  <input type="hidden" name="dataSelect[]" value="{{ $dataWarning[$j]->MucTonVinh }}"/>
+                                  </td>
                                   <td></td>
                                   <td></td>
                                   <td>
@@ -260,6 +263,15 @@
                                       class="btn-width btn-primary"
                                       type="button"
                                       id="btn-import"
+                                      onclick="XoaXuLyRieng({{ $dataWarning[$j]->Id }})"
+                                    >
+                                      Xóa
+                                    </button>
+                                    <button
+                                      class="btn-width btn-primary"
+                                      type="button"
+                                      id="btn-import"
+                                      onclick="ApplyXuLyRieng({{ $dataWarning[$j]->Id }})"
                                     >
                                       Apply
                                     </button>
@@ -272,13 +284,6 @@
                           </div>
                           <!-- Button -->
                           <div id="btn-right">
-                            <button
-                              class="btn-width btn-primary btn-set"
-                              type="button"
-                              id="btn-xu-ly"
-                            >
-                              Thêm vào danh sách xử lý riêng
-                            </button>
                             <a
                               href="{{ url('/TimKiemTonVinh') }}"
                               class="btn-width btn-primary btn-set ms-3"
@@ -300,6 +305,34 @@
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
+    function ApplyXuLyRieng(id){
+      $.ajax({
+            url: "/api/ApplyXuLyRieng",
+            method: "POST",
+            data: { "_token": "{{ csrf_token() }}", Id: id},
+            success: function () {
+                $("#tbody_"+id).remove();
+                alert("Apply thành công!");
+            },
+            error: function(){
+              alert("Đã xảy ra lỗi khi apply!");
+            }
+      })
+    }
+    function XoaXuLyRieng(id){
+      $.ajax({
+            url: "/api/XoaXuLyRieng",
+            method: "POST",
+            data: { "_token": "{{ csrf_token() }}", Id: id},
+            success: function () {
+                $("#tbody_"+id).remove();
+                alert("Xóa thành công!");
+            },
+            error: function(){
+              alert("Đã xảy ra lỗi khi xóa!");
+            }
+      })
+    }
     function EditMucTV(id) {
       var valueSelected = $("#select-"+id).children(":selected").val();
       $.ajax({
@@ -307,7 +340,7 @@
             method: "POST",
             data: { "_token": "{{ csrf_token() }}", Id: id, MucTV: valueSelected },
             success: function () {
-                $("#tbody_"+id).remove();
+              $("#tbody_"+id).remove();
                 alert("Thay đổi thành công!");
             },
             error: function(){

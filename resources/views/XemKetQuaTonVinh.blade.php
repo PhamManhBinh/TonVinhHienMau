@@ -36,20 +36,19 @@
                       </div>
 
                       <div class="row justify-content-center">
-
-                        <div class="col-3 col-lg-3 col-md-6">
+                        <form class="col-3 col-lg-3 col-md-6"method="POST">
+                        {{ csrf_field() }}
                           <div class="input-group">
-                            <input type="text" class="yearpicker form-control" value="" />
+                            <input type="text" class="yearpicker form-control" value="" name="time" />
                             <button class="btn btn-primary" type="submit">Xem Kết Quả</button>
                           </div>
-                        </div>
-
+                        </form>
 
 
                         <div class="card-body">
                           <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item" role="presentation">
-                              <a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">2020</a>
+                              <a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">{{ $year }}</a>
                             </li>
                           </ul>
 
@@ -73,66 +72,59 @@
                                     </tr>
                                   </thead>
                                   <tbody>
+                                    <?php $i=1; ?>
+                                    @foreach($data as $item)
                                     <tr>
-                                      <td>1</td>
-                                      <td class="text-bold-500">Phạm Thanh Tín</td>
-                                      <td>01/01/2000</td>
-                                      <td class="text-bold-500">Quy Nhơn-Bình Định</td>
-                                      <td>0312458785</td>
-                                      <td>Xã Hiệp Mỹ-Huyện Phù Mỹ-Bình Định</td>
-                                      <td>15</td>
-                                      <td>B</td>
-                                      <td>Rh(dương)</td>
-                                      <td><img src="assets/images/logo/check.png"></td>
+                                      <td>{{ $i }}</td>
+                                      <td class="text-bold-500">{{ $item->HoTen }}</td>
+                                      <td>{{ $item->NgaySinh }}</td>
+                                      <td class="text-bold-500">{{ $item->NoiLamViec }}</td>
+                                      <td>{{ $item->SDT }}</td>
+                                      <td>{{ $item->DiaChi }}</td>
+                                      <td>{{ $item->SoLanHien }}</td>
+                                      <td>{{ $item->Nhom_ABO }}</td>
+                                      <td>{{ $item->Nhom_Rh }}</td>
+                                      <td>
+                                      @if( strpos($item->Muc_5,$year) !== false )
+                                        <img src="assets/images/logo/5_48px.png" />
+                                      @endif
+                                      @if( strpos($item->Muc_10,$year) !== false )
+                                        <img src="assets/images/logo/10_48px.png" />
+                                      @endif
+                                      @if( strpos($item->Muc_15,$year) !== false )
+                                        <img src="assets/images/logo/15_48px.png" />
+                                      @endif
+                                      @if( strpos($item->Muc_20,$year) !== false )
+                                        <img src="assets/images/logo/20_48px.png" />
+                                      @endif
+                                      @if( strpos($item->Muc_30,$year) !== false )
+                                        <img src="assets/images/logo/30_48px.png" />
+                                      @endif
+                                      @if( strpos($item->Muc_40,$year) !== false )
+                                        <img src="assets/images/logo/40_48px.png" />
+                                      @endif
+                                      @if( strpos($item->Muc_50,$year) !== false )
+                                        <img src="assets/images/logo/50_48px.png" />
+                                      @endif
+                                      @if( strpos($item->Muc_60,$year) !== false )
+                                        <img src="assets/images/logo/60_48px.png" />
+                                      @endif
+                                      @if( strpos($item->Muc_70,$year) !== false )
+                                        <img src="assets/images/logo/70_48px.png" />
+                                      @endif
+                                      @if( strpos($item->Muc_80,$year) !== false )
+                                        <img src="assets/images/logo/80_48px.png" />
+                                      @endif
+                                      @if( strpos($item->Muc_90,$year) !== false )
+                                        <img src="assets/images/logo/90_48px.png" />
+                                      @endif
+                                      @if( strpos($item->Muc_100,$year) !== false )
+                                        <img src="assets/images/logo/100_48px.png" />
+                                      @endif
+                                      </td>
                                     </tr>
-                                    <tr>
-                                      <td>2</td>
-                                      <td class="text-bold-500">Phạm Thanh Tín</td>
-                                      <td>01/01/2000</td>
-                                      <td class="text-bold-500">Quy Nhơn-Bình Định</td>
-                                      <td>0312458785</td>
-                                      <td>Xã Hiệp Mỹ-Huyện Phù Mỹ-Bình Định</td>
-                                      <td>15</td>
-                                      <td>B</td>
-                                      <td>Rh(dương)</td>
-                                      <td><img src="assets/images/logo/check.png"></td>
-                                    </tr>
-                                    <tr>
-                                      <td>3</td>
-                                      <td class="text-bold-500">Phạm Thanh Tín</td>
-                                      <td>01/01/2000</td>
-                                      <td class="text-bold-500">Quy Nhơn-Bình Định</td>
-                                      <td>0312458785</td>
-                                      <td>Xã Hiệp Mỹ-Huyện Phù Mỹ-Bình Định</td>
-                                      <td>15</td>
-                                      <td>B</td>
-                                      <td>Rh(dương)</td>
-                                      <td><img src="assets/images/logo/check.png"></td>
-                                    </tr>
-                                    <tr>
-                                      <td>4</td>
-                                      <td class="text-bold-500">Phạm Thanh Tín</td>
-                                      <td>01/01/2000</td>
-                                      <td class="text-bold-500">Quy Nhơn-Bình Định</td>
-                                      <td>0312458785</td>
-                                      <td>Xã Hiệp Mỹ-Huyện Phù Mỹ-Bình Định</td>
-                                      <td>15</td>
-                                      <td>B</td>
-                                      <td>Rh(dương)</td>
-                                      <td><img src="assets/images/logo/check.png"></td>
-                                    </tr>
-                                    <tr>
-                                      <td>5</td>
-                                      <td class="text-bold-500">Phạm Thanh Tín</td>
-                                      <td>01/01/2000</td>
-                                      <td class="text-bold-500">Quy Nhơn-Bình Định</td>
-                                      <td>0312458785</td>
-                                      <td>Xã Hiệp Mỹ-Huyện Phù Mỹ-Bình Định</td>
-                                      <td>15</td>
-                                      <td>B</td>
-                                      <td>Rh(dương)</td>
-                                      <td><img src="assets/images/logo/check.png"></td>
-                                    </tr>
+                                    <?php $i++ ?>
+                                    @endforeach
                                   </tbody>
                                 </table>
                               </div>

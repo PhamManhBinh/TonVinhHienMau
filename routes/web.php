@@ -107,7 +107,7 @@ Route::post('/TaoMoiTonVinh','App\Http\Controllers\LichSuTonVinhController@TaoMo
 Route::get('/XoaDotTonVinh','App\Http\Controllers\LichSuTonVinhController@XoaDotTonVinh');
 //Xem kết quả 1 năm bất kỳ
 Route::get('/XemKetQuaTonVinh','App\Http\Controllers\LichSuTonVinhController@XemKetQua');
-//Route::post('/TaoMoiTonVinh','App\Http\Controllers\ImportCoSoController@TaoMoiTonVinh');
+Route::post('/XemKetQuaTonVinh','App\Http\Controllers\LichSuTonVinhController@XemKetQuaPost');
 
 // Tìm kiếm thông tin
 Route::get('/TimKiemTonVinh', 'App\Http\Controllers\TimKiemController@index');
@@ -117,6 +117,8 @@ Route::get('/TimKiemTonVinh/{Id}', 'App\Http\Controllers\TimKiemController@edit'
 Route::post('/TimKiemTonVinh/{Id}', 'App\Http\Controllers\TimKiemController@update');
 
 Route::post('/ImportCoSo/ImportAll','App\Http\Controllers\ImportCoSoController@ImportAll');
+Route::post('/api/XoaXuLyRieng','App\Http\Controllers\ImportCoSoController@XoaXuLyRieng');
+Route::post('/api/ApplyXuLyRieng','App\Http\Controllers\ImportCoSoController@ApplyXuLyRieng');
 
 Route::get('/KetQuaTonVinh', 'App\Http\Controllers\KetQuaTonVinhController@XemKetQua');
 Route::post('/XacNhan', 'App\Http\Controllers\KetQuaTonVinhController@XacNhan');

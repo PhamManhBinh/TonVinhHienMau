@@ -58,7 +58,7 @@
                   <li class="submenu-item{{ Request::is('ImportCoSo') ? ' active' : '' }}">
                     <a href="{{ url('/ImportCoSo') }}">Kiểm Duyệt Tôn Vinh</a>
                   </li>
-                  <li class="submenu-item{{ Request::is('TimKiemTonVinh') ? 'active' : '' }}">
+                  <li class="submenu-item{{ Request::is('TimKiemTonVinh') ? ' active' : '' }}">
                     <a href="{{ url('/TimKiemTonVinh') }}"> Tìm kiếm thông tin </a>
                   </li>
                 </ul>
@@ -67,7 +67,7 @@
               <li class="sidebar-item has-sub {{ Request::is('TaoMoiTonVinh')||Request::is('XemKetQua') ? ' active' : '' }}">
                 <a href="#" class="sidebar-link">
                   <i class="bi bi-hexagon-fill"></i>
-                  <span>Lịch Sử Tôn Vinh</span>
+                  <span>Lịch sử tôn vinh</span>
                 </a>
                 <ul class="submenu">
                   <li class="submenu-item{{ Request::is('TaoMoiTonVinh') ? ' active' : '' }}">

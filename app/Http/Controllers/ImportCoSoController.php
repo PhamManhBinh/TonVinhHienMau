@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\DonVi;
 use App\Models\ExcelTonVinh;
+use App\Models\NguoiHienMau;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Illuminate\Support\Facades\DB;
@@ -86,7 +87,7 @@ class ImportCoSoController extends Controller
         $this->XuLy($data,$listDuplicate,$listWarning);
         
         //print_r($listDuplicate);
-        return view('KiemDuyetTonVinh')->with(['data'=>$listDuplicate,'dataWarning'=>$listWarning,'idTV'=>$this->MaDotTonVinh,'max'=>$this->max]);
+        return view('KiemDuyetTonVinh')->with(['data'=>$listDuplicate,'dataWarning'=>$listWarning,'idTV'=>$this->MaDotTonVinh,'idDV'=>$this->MaDonVi,'max'=>$this->max]);
     }
 
     protected function XuLy($list,&$listDuplicate,&$listWarning){
@@ -330,11 +331,30 @@ class ImportCoSoController extends Controller
             $dataSelect = $request['dataSelect'];
             for($i=0;$i<count($dataID);$i++){
                 //try{
+                    
+                    if(count(DB::select('SELECT * FROM nguoihienmau,exceltonvinh WHERE exceltonvinh.Id='.$dataID[$i].' AND nguoihienmau.HoTen=exceltonvinh.HoTen AND nguoihienmau.NgaySinh=exceltonvinh.NgaySinh AND nguoihienmau.Nhom_ABO=exceltonvinh.Nhom_ABO AND Xoa=0'))<1){
+                        DB::insert("INSERT INTO nguoihienmau(HoTen, NgaySinh, NgheNghiep, NoiLamViec, SDT, DiaChi,SoLanHien, Nhom_ABO, Nhom_Rh, Nguon_Goc_Import)
+                        SELECT HoTen, NgaySinh, NgheNghiep, '-', '-', DiaChi,SoLanHien, Nhom_ABO, '-',1 FROM exceltonvinh WHERE Id=".$dataID[$i]);
+                    }
+                
                     DB::update('UPDATE exceltonvinh SET MucTonVinh=? WHERE Id=?',[$dataSelect[$i],$dataID[$i]]);
                 //}catch(Exception $exception){}
             }
         }
-        echo 'ok';
+        return response('200')->setStatusCode(200);
+    }
+
+    public function XoaXuLyRieng(Request $request){
+        $tonvinh = ExcelTonVinh::find($request->Id);
+        $tonvinh->delete();
+        return response('200')->setStatusCode(200);
+    }
+    public function ApplyXuLyRieng(Request $request){
+        if(count(DB::select('SELECT * FROM nguoihienmau,exceltonvinh WHERE exceltonvinh.Id='.$request->Id.' AND nguoihienmau.HoTen=exceltonvinh.HoTen AND nguoihienmau.NgaySinh=exceltonvinh.NgaySinh AND nguoihienmau.Nhom_ABO=exceltonvinh.Nhom_ABO AND Xoa=0'))<1){
+            DB::insert("INSERT INTO nguoihienmau(HoTen, NgaySinh, NgheNghiep, NoiLamViec, SDT, DiaChi,SoLanHien, Nhom_ABO, Nhom_Rh, Nguon_Goc_Import)
+            SELECT HoTen, NgaySinh, NgheNghiep, '-', '-', DiaChi,SoLanHien, Nhom_ABO, '-',1 FROM exceltonvinh WHERE Id=".$request->Id);
+        }
+        return response('200')->setStatusCode(200);
     }
 
     
