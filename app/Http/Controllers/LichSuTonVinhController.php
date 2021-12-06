@@ -46,8 +46,11 @@ class LichSuTonVinhController extends Controller
 
     public function XemKetQua(Request $request){
         //$tonvinh = TonVinh::selectRaw('YEAR(ThoiGian)')->orderBy('ThoiGian','DESC')->first();
-        $tonvinh = DB::select("SELECT YEAR(ThoiGian) as ThoiGian FROM tonvinh ORDER BY ThoiGian DESC")[0];
-        $thoigian = strval($tonvinh->ThoiGian);
+        $tonvinh = DB::select("SELECT YEAR(ThoiGian) as ThoiGian FROM tonvinh ORDER BY ThoiGian DESC");
+        if(!$tonvinh){
+            return view('XemKetQuaTonVinhNull');
+        }
+        $thoigian = strval($tonvinh[0]->ThoiGian);
         $data = DB::select("SELECT * FROM nguoihienmau WHERE Muc_5 LIKE '%".$thoigian."%' OR Muc_10 LIKE '%".$thoigian."%' OR Muc_15 LIKE '%".$thoigian."%' OR Muc_20 LIKE '%".$thoigian."%' OR Muc_30 LIKE '%".$thoigian."%' OR Muc_40 LIKE '%".$thoigian."%' OR Muc_50 LIKE '%".$thoigian."%' OR Muc_60 LIKE '%".$thoigian."%' OR Muc_70 LIKE '%".$thoigian."%' OR Muc_80 LIKE '%".$thoigian."%' OR Muc_90 LIKE '%".$thoigian."%' OR Muc_100 LIKE '%".$thoigian."%' ");
         
         return view('XemKetQuaTonVinh')->with(['year'=>$thoigian,'data'=>$data]);
