@@ -77,7 +77,7 @@
                                     <tr>
                                       <td>{{ $i }}</td>
                                       <td class="text-bold-500">{{ $item->HoTen }}</td>
-                                      <td>{{ $item->NgaySinh }}</td>
+                                      <td>{{ date('d/m/Y',strtotime($item->NgaySinh)) }}</td>
                                       <td class="text-bold-500">{{ $item->NoiLamViec }}</td>
                                       <td>{{ $item->SDT }}</td>
                                       <td>{{ $item->DiaChi }}</td>

@@ -96,7 +96,7 @@
                                       <tr>
                                         <td>{{ $stt }}</td>
                                         <td class="text-bold-500">{{ $data[$j]->HoTen }}</td>
-                                        <td>{{ $data[$j]->NgaySinh }}</td>
+                                        <td>{{ date('d/m/Y',strtotime($data[$j]->NgaySinh)) }}</td>
                                         <td class="text-bold-500">{{ $data[$j]->NoiLamViec }}</td>
                                         <td>{{ $data[$j]->SDT }}</td>
                                         <td>{{ $data[$j]->DiaChi }}</td>
@@ -178,7 +178,7 @@
                                 class="btn-width btn-primary btn-set"
                                 type="button"
                                 id="btn-xuat-excel"
-                                onclick="XuatExcel({{ $idTV }})"
+                                onclick="XuatExcel({{ $idTV }},{{ $max }})"
                               >
                                 Xuất excel
                               </button>
@@ -233,7 +233,7 @@
                 }
         })
         }
-        function XuatExcel(id){
+        function XuatExcel(id,maxTV){
             if($("#btn-xac-nhan").is(':visible')){
                 alert("Vui lòng xác nhận trước khi xuất Excel");
                 return;
@@ -241,12 +241,31 @@
             $.ajax({
                 url: "/XuatExcel",
                 method: "POST",
-                data: { "_token": "{{ csrf_token() }}", Id: id },
-                success: function () {
-                    alert("ok");
+                data: { "_token": "{{ csrf_token() }}", Id: id, max: maxTV },
+                xhr: function () {
+                  var xhr = new XMLHttpRequest();
+                  xhr.responseType = "blob";
+                  return xhr;
+                },
+                success: function (data, status, xhr) {
+                  let filename = "";
+                  let disposition = xhr.getResponseHeader('Content-Disposition');
+                  if (disposition && disposition.indexOf('attachment') !== -1) {
+                      let filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+                      let matches = filenameRegex.exec(disposition);
+                      if (matches != null && matches[1]) filename = matches[1].replace(/['"]/g, '');
+                  }
+                  let a = document.createElement('a');
+                  let url = window.URL.createObjectURL(data);
+                  a.href = url;
+                  a.download = filename.replace('UTF-8', '');;
+                  document.body.append(a);
+                  a.click();
+                  a.remove();
+                  window.URL.revokeObjectURL(url);
                 },
                 error: function(){
-                    alert("Không thể thay đổi thành mức tôn vinh này!");
+                    alert("Không thể xuất file excel, vui lòng thử lại sau!");
                 }
             })
         }

@@ -157,7 +157,7 @@
                             @foreach($nguoihienmau as $pep)
                             <tr>
                               <td class="text-bold-500">{{ $pep->HoTen }}</td>
-                              <td>{{ $pep->NgaySinh }}</td>
+                              <td>{{ date('d/m/Y',strtotime($pep->NgaySinh)) }}</td>
                               <td class="text-bold-500">{{ $pep->NoiLamViec }}</td>
                               <td>{{ $pep->SDT }}</td>
                               <td>{{ $pep->DiaChi }}</td>
