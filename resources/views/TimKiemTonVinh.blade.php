@@ -209,11 +209,6 @@
                           </tbody>
                         </table>
                       </div>
-                      <div id="btn-right">
-                        <button class="btn btn-primary btn-set" type="button" id="btn-tonvinh">
-                          Tôn vinh
-                        </button>
-                      </div>
                     </div>
                   </div>
                 </div>

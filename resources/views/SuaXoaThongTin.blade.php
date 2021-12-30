@@ -37,7 +37,6 @@
                           <table class="table table-bordered mb-0">
                             <thead>
                               <tr>
-                                <th>Số thứ tự</th>
                                 <th>Họ và tên</th>
                                 <th>Số điện thoại</th>
                                 <th>Tài khoản</th>
@@ -49,7 +48,6 @@
                             <tbody>
                               @foreach($users as $user)
                               <tr>
-                                <td>{{$user->Id}}</td>
                                 <td class="text-bold-500">{{$user->Name}}</td>
                                 <td>{{$user->Phone}}</td>
                                 <td>{{$user->UserName}}</td>

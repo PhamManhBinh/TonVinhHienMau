@@ -65,8 +65,8 @@ class KetQuaTonVinhController extends Controller
                 'vertical'   => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
             ),
             'borders' => array(
-                'bottom' => array(
-                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK,
+                'allBorders' => array(
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
                     'color' => array('rgb' => '333333'),
                 ),
             ),
@@ -82,29 +82,47 @@ class KetQuaTonVinhController extends Controller
                     'name' => 'Times New Roman',
                     'size' => 11,
                 ),
+                'borders' => array(
+                    'allBorders' => array(
+                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                        'color' => array('rgb' => '333333'),
+                    ),
+                ),
             );
+            $styleArray3 = array(
+                'font' => array(
+                    'name' => 'Times New Roman',
+                    'bold' => true,
+                    'size' => 14,
+                ),
+                'alignment' => array(
+                    'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                    'vertical'   => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                    'wrapText' => true,
+                ),
+                );
         // auto fit column to content
         foreach(range('A', 'I') as $columnID) {
             if($columnID != 'D')
                 $spreadsheet->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
         }
         // set the names of header cells
-            $sheet->setCellValue('A1', 'STT');
-            $sheet->setCellValue('B1', 'Họ và tên');
-            $sheet->setCellValue('C1', 'Ngày sinh');
-            $sheet->setCellValue('D1', 'Nơi làm việc');
-            $sheet->setCellValue('E1', 'Số điện thoại');
-            $sheet->setCellValue('F1', 'Địa chỉ');
-            $sheet->setCellValue('G1', 'Số lần hiến');
-            $sheet->setCellValue('H1', 'Nhóm máu');
-            $sheet->setCellValue('I1', 'Nhóm Rh');
+            $sheet->setCellValue('A3', 'STT');
+            $sheet->setCellValue('B3', 'Họ và tên');
+            $sheet->setCellValue('C3', 'Ngày sinh');
+            $sheet->setCellValue('D3', 'Nơi làm việc');
+            $sheet->setCellValue('E3', 'Số điện thoại');
+            $sheet->setCellValue('F3', 'Địa chỉ');
+            $sheet->setCellValue('G3', 'Số lần hiến');
+            $sheet->setCellValue('H3', 'Nhóm máu');
+            $sheet->setCellValue('I3', 'Nhóm Rh');
             //set dynamic column
             $x=0;
             $columnArr = array();
             foreach(range('J', 'Z') as $columnID) {
                     array_push($columnArr,$columnID);
                     $spreadsheet->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
-                    $sheet->setCellValue($columnID.'1', 'Mức '.$arr[$x]);
+                    $sheet->setCellValue($columnID.'3', 'Mức '.$arr[$x]);
                     if($arr[$x] >= $max)
                         break;
                 
@@ -112,69 +130,69 @@ class KetQuaTonVinhController extends Controller
             }
 
             //set style
-            $spreadsheet->getActiveSheet()->getStyle('A1:'.$columnID.'1')->applyFromArray($styleArray1);
+            $spreadsheet->getActiveSheet()->getStyle('A3:'.$columnID.'3')->applyFromArray($styleArray1);
 
             //write data
-            $x=2; $stt=1;
+            $x=4; $stt=1;
             foreach($data as $item){
-                $sheet->setCellValue('A'.$x, $stt)->getStyle('A'.$x)->applyFromArray($styleArray2);
-                $sheet->setCellValue('B'.$x, $item->HoTen)->getStyle('B'.$x)->applyFromArray($styleArray2);
-                $sheet->setCellValue('C'.$x, date('d/m/Y',strtotime($item->NgaySinh)))->getStyle('C'.$x)->applyFromArray($styleArray2);
-                $sheet->setCellValue('D'.$x, $item->NoiLamViec)->getStyle('D'.$x)->applyFromArray($styleArray2);
-                $sheet->setCellValue('E'.$x, $item->SDT)->getStyle('E'.$x)->applyFromArray($styleArray2);
-                $sheet->setCellValue('F'.$x, $item->DiaChi)->getStyle('F'.$x)->applyFromArray($styleArray2);
-                $sheet->setCellValue('G'.$x, $item->SoLanHien)->getStyle('G'.$x)->applyFromArray($styleArray2);
-                $sheet->setCellValue('H'.$x, $item->Nhom_ABO)->getStyle('H'.$x)->applyFromArray($styleArray2);
-                $sheet->setCellValue('I'.$x, $item->Nhom_Rh)->getStyle('H'.$x)->applyFromArray($styleArray2);
+                $sheet->setCellValue('A'.$x, $stt);
+                $sheet->setCellValue('B'.$x, $item->HoTen);
+                $sheet->setCellValue('C'.$x, date('d/m/Y',strtotime($item->NgaySinh)));
+                $sheet->setCellValue('D'.$x, $item->NoiLamViec);
+                $sheet->setCellValue('E'.$x, $item->SDT);
+                $sheet->setCellValue('F'.$x, $item->DiaChi);
+                $sheet->setCellValue('G'.$x, $item->SoLanHien);
+                $sheet->setCellValue('H'.$x, $item->Nhom_ABO);
+                $sheet->setCellValue('I'.$x, $item->Nhom_Rh);
                 for($i=0;$i<count($columnArr);$i++){
                     switch($arr[$i]){
                         case 5:
                             if($item->Muc_5 != NULL)
-                                $sheet->setCellValue($columnArr[$i].$x, 'x')->getStyle($columnArr[$i].$x)->applyFromArray($styleArray2);
+                                $sheet->setCellValue($columnArr[$i].$x, $item->SoLanHien);
                             break;
                         case 10:
                             if($item->Muc_10 != NULL)
-                                $sheet->setCellValue($columnArr[$i].$x, 'x')->getStyle($columnArr[$i].$x)->applyFromArray($styleArray2);
+                                $sheet->setCellValue($columnArr[$i].$x, $item->SoLanHien);
                             break;
                         case 15:
                             if($item->Muc_15 != NULL)
-                                $sheet->setCellValue($columnArr[$i].$x, 'x')->getStyle($columnArr[$i].$x)->applyFromArray($styleArray2);
+                                $sheet->setCellValue($columnArr[$i].$x, $item->SoLanHien);
                             break;
                         case 20:
                             if($item->Muc_20 != NULL)
-                                $sheet->setCellValue($columnArr[$i].$x, 'x')->getStyle($columnArr[$i].$x)->applyFromArray($styleArray2);
+                                $sheet->setCellValue($columnArr[$i].$x, $item->SoLanHien);
                             break;
                         case 30:
                             if($item->Muc_30 != NULL)
-                                $sheet->setCellValue($columnArr[$i].$x, 'x')->getStyle($columnArr[$i].$x)->applyFromArray($styleArray2);
+                                $sheet->setCellValue($columnArr[$i].$x, $item->SoLanHien);
                             break;
                         case 40:
                             if($item->Muc_40 != NULL)
-                                $sheet->setCellValue($columnArr[$i].$x, 'x')->getStyle($columnArr[$i].$x)->applyFromArray($styleArray2);
+                                $sheet->setCellValue($columnArr[$i].$x, $item->SoLanHien);
                             break;
                         case 50:
                             if($item->Muc_50 != NULL)
-                                $sheet->setCellValue($columnArr[$i].$x, 'x')->getStyle($columnArr[$i].$x)->applyFromArray($styleArray2);
+                                $sheet->setCellValue($columnArr[$i].$x, $item->SoLanHien);
                             break;
                         case 60:
                             if($item->Muc_60 != NULL)
-                                $sheet->setCellValue($columnArr[$i].$x, 'x')->getStyle($columnArr[$i].$x)->applyFromArray($styleArray2);
+                                $sheet->setCellValue($columnArr[$i].$x, $item->SoLanHien);
                             break;
                         case 70:
                             if($item->Muc_70 != NULL)
-                                $sheet->setCellValue($columnArr[$i].$x, 'x')->getStyle($columnArr[$i].$x)->applyFromArray($styleArray2);
+                                $sheet->setCellValue($columnArr[$i].$x, $item->SoLanHien);
                             break;
                         case 80:
                             if($item->Muc_80 != NULL)
-                                $sheet->setCellValue($columnArr[$i].$x, 'x')->getStyle($columnArr[$i].$x)->applyFromArray($styleArray2);
+                                $sheet->setCellValue($columnArr[$i].$x, $item->SoLanHien);
                             break;
                         case 90:
                             if($item->Muc_90 != NULL)
-                                $sheet->setCellValue($columnArr[$i].$x, 'x')->getStyle($columnArr[$i].$x)->applyFromArray($styleArray2);
+                                $sheet->setCellValue($columnArr[$i].$x, $item->SoLanHien);
                             break;
                         case 100:
                             if($item->Muc_100 != NULL)
-                                $sheet->setCellValue($columnArr[$i].$x, 'x')->getStyle($columnArr[$i].$x)->applyFromArray($styleArray2);
+                                $sheet->setCellValue($columnArr[$i].$x, $item->SoLanHien);
                             break;
                         
                     }
@@ -182,6 +200,18 @@ class KetQuaTonVinhController extends Controller
 
                 $x++; $stt++;
             }
+
+            //set style
+            $spreadsheet->getActiveSheet()->getStyle('A4:'.$columnID.($x-1))->applyFromArray($styleArray2);
+
+            //header
+            $spreadsheet->getActiveSheet()->mergeCells('A1:'.$columnID.'1');
+            $spreadsheet->getActiveSheet()->getCell('A1')->setValue("DANH SÁCH CÁ NHÂN HIẾN MÁU TÌNH NGUYỆN 5 LẦN TRỞ LÊN 
+            CHƯA ĐƯỢC TÔN VINH TỈNH BÌNH ĐỊNH NĂM 2021
+            (Căn cứ theo Quy chế Tôn vinh, khen thưởng cá nhân, tập thể có thành tích Hiến máu tình nguyện và vận động hiến máu tình nguyện tại Quyết định số 139/QĐ-BCĐQG ngày 29 tháng 9 năm 2009 của Ban Chỉ đạo quốc gia vận động hiến máu tình nguyện)");
+            $spreadsheet->getActiveSheet()->getRowDimension(1)->setRowHeight(100); //auto height for row 1
+            $spreadsheet->getActiveSheet()->getStyle('A1')->applyFromArray($styleArray3);
+            
 
             $filename = 'Ket Qua Ton Vinh';
             $writer = new Xlsx($spreadsheet);
